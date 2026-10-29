@@ -71,7 +71,7 @@ export default async function AidatAkisi({
             <p className="text-4xl">📋</p>
             <p className="mt-3 font-semibold text-neutral-800">Henüz aidat dönemi yok</p>
             <p className="mt-1.5 text-sm text-neutral-500">
-              Kulüp ilk dönem tahakkukunu oluşturduğunda tablo burada görünecek.
+              İlk ayın aidat borçları açıldığında tablo burada görünecek.
             </p>
           </div>
         ) : (

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import UstBaslik from "@/components/UstBaslik";
 import { AidatRozeti, OdemeRozeti } from "@/components/Rozet";
+import { kalanTutar, kismiMi, odenenler } from "@/lib/aidat";
 import Ikon from "@/components/ui/Ikon";
 import { paraEkraniGerekli } from "@/lib/yetki";
 import { donemAdi, gunAdi, tl } from "@/lib/format";
@@ -33,8 +34,8 @@ export default async function VeliAidat() {
   const aidatlar = (aidatData ?? []) as Aidat[];
   const odemeler = (odemeData ?? []) as Odeme[];
 
-  const borc = aidatlar.filter((a) => a.durum === "bekliyor")
-    .reduce((t, a) => t + Number(a.tutar), 0);
+  const odenenHarita = odenenler(odemeler);
+  const borc = aidatlar.reduce((t, a) => t + kalanTutar(a, odenenHarita), 0);
   const odenen = odemeler.filter((o) => o.durum === "onaylandi")
     .reduce((t, o) => t + Number(o.tutar), 0);
   const bekleyenBildirim = odemeler.filter((o) => o.durum === "beklemede").length;
@@ -68,9 +69,7 @@ export default async function VeliAidat() {
 
         {sporcular.map((s) => {
           const kendi = aidatlar.filter((a) => a.sporcu_id === s.id);
-          const sporcuBorc = kendi
-            .filter((a) => a.durum === "bekliyor")
-            .reduce((t, a) => t + Number(a.tutar), 0);
+          const sporcuBorc = kendi.reduce((t, a) => t + kalanTutar(a, odenenHarita), 0);
           if (kendi.length === 0) return null;
 
           return (
@@ -97,9 +96,13 @@ export default async function VeliAidat() {
                           ? `Son ödeme: ${gunAdi(a.son_odeme_tarihi)}`
                           : "Son ödeme tarihi belirtilmemiş"}
                       </p>
+                      {a.aciklama ? <p className="truncate text-[11px] text-neutral-500">{a.aciklama}</p> : null}
                     </div>
                     <div className="flex flex-col items-end gap-1.5">
                       <span className="text-sm font-bold text-neutral-900">{tl(a.tutar)}</span>
+                      {kismiMi(a, odenenHarita) ? (
+                        <span className="text-[11px] font-semibold text-amber-800">kalan {tl(kalanTutar(a, odenenHarita))}</span>
+                      ) : null}
                       <AidatRozeti durum={a.durum} sonOdeme={a.son_odeme_tarihi} />
                     </div>
                   </div>
@@ -116,7 +119,7 @@ export default async function VeliAidat() {
             </span>
             <p className="mt-3 font-semibold text-neutral-800">Aidat kaydı yok</p>
             <p className="mt-1.5 text-sm text-neutral-500">
-              Kulüp dönem tahakkuku oluşturduğunda burada görünecek.
+              Ay başında aidat borcu açıldığında burada görünecek.
             </p>
           </div>
         ) : null}

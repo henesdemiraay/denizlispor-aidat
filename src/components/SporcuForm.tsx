@@ -129,6 +129,37 @@ export default function SporcuForm({ sporcu }: { sporcu?: Sporcu }) {
           </div>
         </div>
 
+        <fieldset className="space-y-3 rounded-xl bg-neutral-50 px-3.5 py-3.5 ring-1 ring-white/[0.05]">
+          <legend className="bolum-basligi px-1">Aidat indirimi ve dondurma</legend>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="etiket" htmlFor="indirim_orani">İndirim (%)</label>
+              <input id="indirim_orani" name="indirim_orani" className="alan" inputMode="decimal"
+                defaultValue={sporcu?.indirim_orani ?? 0} />
+            </div>
+            <div>
+              <label className="etiket" htmlFor="indirim_nedeni">Neden</label>
+              <input id="indirim_nedeni" name="indirim_nedeni" className="alan" maxLength={80}
+                placeholder="Burs, şehit yakını…" defaultValue={sporcu?.indirim_nedeni ?? ""} />
+            </div>
+            <div>
+              <label className="etiket" htmlFor="dondurma_bas">Dondurma başlangıcı</label>
+              <input id="dondurma_bas" name="dondurma_bas" type="date" className="alan"
+                defaultValue={sporcu?.dondurma_bas ?? ""} />
+            </div>
+            <div>
+              <label className="etiket" htmlFor="dondurma_bit">Dondurma bitişi</label>
+              <input id="dondurma_bit" name="dondurma_bit" type="date" className="alan"
+                defaultValue={sporcu?.dondurma_bit ?? ""} />
+            </div>
+          </div>
+          <p className="text-xs leading-relaxed text-neutral-500">
+            %100 indirim burs sayılır, borç &quot;muaf&quot; açılır. Kardeş indirimi Ayarlar&apos;dan
+            kendiliğinden uygulanır; iki indirimden büyük olanı geçer, toplanmaz. Dondurma ayın
+            tamamını kapsıyorsa o ay borç açılmaz; bitiş boşsa süresiz.
+          </p>
+        </fieldset>
+
         <div>
           <label className="etiket" htmlFor="notlar">Notlar</label>
           <textarea id="notlar" name="notlar" className="alan min-h-20 resize-y"

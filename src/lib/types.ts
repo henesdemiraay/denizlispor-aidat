@@ -31,6 +31,11 @@ export type Sporcu = {
   sporcu_eposta: string | null;
   sporcu_kullanici_id: string | null;
   aylik_aidat: number;
+  /** 20261031 göçüyle gelir; göç yoksa tanımsız */
+  indirim_orani?: number;
+  indirim_nedeni?: string | null;
+  dondurma_bas?: string | null;
+  dondurma_bit?: string | null;
   durum: SporcuDurum;
   kayit_tarihi: string;
   notlar: string | null;

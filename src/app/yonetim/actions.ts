@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { hataIsle } from "@/lib/eylem";
+import { hataIsle, uyar } from "@/lib/eylem";
 import { ROL_ADI } from "@/lib/roller";
 
 function sayi(v: FormDataEntryValue | null) {
@@ -48,13 +48,29 @@ export async function sporcuKaydet(formData: FormData) {
     notlar: metin(formData.get("notlar")),
   };
 
-  if (id) {
-    const { error } = await supabase.from("spor_sporcular").update(kayit).eq("id", id);
-    if (error) throw new Error(error.message);
-  } else {
-    const { error } = await supabase.from("spor_sporcular").insert(kayit);
-    if (error) throw new Error(error.message);
+  // Esnek aidat alanları (20261031 göçü). Form bu alanları gönderdiyse yazılır.
+  const esnek: Record<string, unknown> = {};
+  if (formData.has("indirim_orani")) {
+    esnek.indirim_orani = Math.max(0, Math.min(100, sayi(formData.get("indirim_orani"))));
+    esnek.indirim_nedeni = metin(formData.get("indirim_nedeni"));
+    esnek.dondurma_bas = metin(formData.get("dondurma_bas"));
+    esnek.dondurma_bit = metin(formData.get("dondurma_bit"));
+    if (esnek.dondurma_bas && esnek.dondurma_bit && String(esnek.dondurma_bit) < String(esnek.dondurma_bas)) {
+      uyar(id ? `/yonetim/sporcular/${id}` : "/yonetim/sporcular/yeni", "Dondurma bitişi başlangıçtan önce olamaz.");
+    }
   }
+
+  const yaz = (alanlar: Record<string, unknown>) =>
+    id
+      ? supabase.from("spor_sporcular").update(alanlar).eq("id", id)
+      : supabase.from("spor_sporcular").insert(alanlar);
+
+  let { error } = await yaz({ ...kayit, ...esnek });
+  // Göç henüz uygulanmadıysa (yeni sütunlar yok) temel alanlarla kaydet
+  if (error && Object.keys(esnek).length && /column|indirim_|dondurma_|PGRST204/i.test(`${error.code} ${error.message}`)) {
+    ({ error } = await yaz(kayit));
+  }
+  if (error) throw new Error(error.message);
 
   revalidatePath("/yonetim/sporcular");
   bildir("/yonetim/sporcular", id ? "Sporcu bilgileri güncellendi" : "Sporcu eklendi");
@@ -195,7 +211,11 @@ export async function ayarKaydet(formData: FormData) {
     "odeme_aciklamasi",
     "iletisim_telefon",
     "iletisim_eposta",
-  ];
+    "kardes_indirimi",
+    "kist_hesap",
+    "son_odeme_gunu",
+    "otomatik_tahakkuk",
+  ].filter((a) => formData.has(a));
   const satirlar = anahtarlar.map((a) => ({
     anahtar: a,
     deger: String(formData.get(a) ?? "").trim(),

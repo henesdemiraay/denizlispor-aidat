@@ -5,6 +5,7 @@ import { aidatDurumGuncelle, aidatSil, donemOlustur } from "@/app/yonetim/action
 import Ikon from "@/components/ui/Ikon";
 import { bugununDonemi, donemAdi, gecikmisMi, tl } from "@/lib/format";
 import KaydetDugmesi from "@/components/KaydetDugmesi";
+import { kalanTutar, kismiMi, odenenler } from "@/lib/aidat";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +15,9 @@ type Satir = {
   tutar: number;
   durum: string;
   son_odeme_tarihi: string | null;
+  aciklama: string | null;
   spor_sporcular: { ad: string; soyad: string; yas_grubu: string | null } | null;
+  spor_odemeler: { aidat_id: string | null; tutar: number; durum: string }[] | null;
 };
 
 type Eksik = {
@@ -43,13 +46,14 @@ export default async function AidatlarSayfasi({
 
   let sorgu = supabase
     .from("spor_aidatlar")
-    .select("id, donem, tutar, durum, son_odeme_tarihi, spor_sporcular(ad, soyad, yas_grubu)")
+    .select("id, donem, tutar, durum, son_odeme_tarihi, aciklama, spor_sporcular(ad, soyad, yas_grubu), spor_odemeler(aidat_id, tutar, durum)")
     .eq("donem", seciliDonem)
     .order("durum");
   if (sp.durum) sorgu = sorgu.eq("durum", sp.durum);
 
   const { data } = await sorgu;
   const satirlar = (data ?? []) as unknown as Satir[];
+  const odenen = odenenler(satirlar.flatMap((s) => s.spor_odemeler ?? []));
 
   // Bu dönemde borcu oluşmamış aktif sporcular
   const { data: eksikData } = await supabase.rpc("spor_eksik_tahakkuk", {
@@ -60,8 +64,7 @@ export default async function AidatlarSayfasi({
 
   const toplam = satirlar.reduce((t, s) => t + Number(s.tutar), 0);
   const bekleyen = satirlar
-    .filter((s) => s.durum === "bekliyor")
-    .reduce((t, s) => t + Number(s.tutar), 0);
+    .reduce((t, s) => t + kalanTutar(s, odenen), 0);
 
   const buAy = new Date().toISOString().slice(0, 7);
 
@@ -112,20 +115,25 @@ export default async function AidatlarSayfasi({
           </summary>
           <ol className="mt-2 list-decimal space-y-1.5 pl-4 text-xs leading-relaxed text-neutral-600">
             <li>
-              Sporcu <b>aktif</b> yapılıp aylık aidatı girildiğinde, içinde bulunulan ay için
-              borcu kendiliğinden oluşur.
+              <b>Her ayın başında</b> aktif sporculara borç kendiliğinden açılır (Ayarlar › Aidat
+              kuralları&apos;ndan kapatılabilir). Ay ortasında aktif yapılan sporcunun borcu o gün açılır.
             </li>
             <li>
-              Geçmiş bir ay ya da toplu tahakkuk gerekiyorsa aşağıdaki formdan o ayı seçip
+              Tutar sporcunun aylık aidatından hesaplanır: sporcuya özel indirim ya da kardeş
+              indiriminden büyük olanı, açıksa kıst; hesabın nedeni satırın altında yazar.
+              Ayın tamamı dondurulan sporcuya o ay borç açılmaz.
+            </li>
+            <li>
+              Geçmiş bir ay için ya da otomatik borç kapalıysa aşağıdaki formdan o ayı seçip
               &quot;Tahakkuku oluştur&quot; deyin. Var olan kayıtlar tekrarlanmaz.
             </li>
             <li>
-              Veli ödemeyi yapıp dekontunu yükler; <b>Ödemeler</b> ekranında onayladığınızda
-              aidat &quot;ödendi&quot;ye döner ve kasaya işlenir.
+              Veli ödemeyi yapıp dekontunu yükler; <b>Ödemeler</b> ekranında onayladığınızda tutar
+              düşer. Kısmi ödemede kalan gösterilir; toplam tamamlanınca aidat &quot;ödendi&quot;ye döner.
             </li>
             <li>
               Ödemeyecek bir sporcu varsa satırındaki <b>Muaf</b> düğmesini kullanın; borç
-              silinmeden takipten çıkar.
+              silinmeden takipten çıkar. Kalıcı burs için sporcu kartında %100 indirim girin.
             </li>
           </ol>
         </details>
@@ -187,7 +195,7 @@ export default async function AidatlarSayfasi({
         <div className="kart mt-3 divide-y divide-neutral-100">
           {satirlar.length === 0 ? (
             <p className="px-5 py-10 text-center text-sm text-neutral-500">
-              Bu dönem için kayıt yok. Yukarıdan tahakkuk oluşturabilirsiniz.
+              Bu dönem için kayıt yok. Ay başında kendiliğinden açılır; beklemek istemezseniz yukarıdan oluşturabilirsiniz.
             </p>
           ) : (
             satirlar.map((s) => (
@@ -200,8 +208,14 @@ export default async function AidatlarSayfasi({
                     {s.spor_sporcular?.yas_grubu ?? "—"} · {donemAdi(s.donem)}
                     {gecikmisMi(s.son_odeme_tarihi, s.durum) ? " · gecikmiş" : ""}
                   </p>
+                  {s.aciklama ? <p className="truncate text-[11px] text-neutral-500">{s.aciklama}</p> : null}
                 </div>
-                <span className="text-sm font-bold">{tl(s.tutar)}</span>
+                <span className="text-right">
+                  <span className="block text-sm font-bold">{tl(s.tutar)}</span>
+                  {kismiMi(s, odenen) ? (
+                    <span className="block text-[11px] font-semibold text-amber-800">kalan {tl(kalanTutar(s, odenen))}</span>
+                  ) : null}
+                </span>
                 <AidatRozeti durum={s.durum} sonOdeme={s.son_odeme_tarihi} />
                 <div className="flex gap-1.5">
                   {s.durum !== "muaf" ? (

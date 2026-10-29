@@ -93,6 +93,48 @@ export default async function AyarlarSayfasi() {
           <KaydetDugmesi>Ayarları kaydet</KaydetDugmesi>
         </form>
 
+        <form action={ayarKaydet} className="kart mt-4 space-y-4 px-4 py-5">
+          <div>
+            <p className="text-sm font-bold text-neutral-900">Aidat kuralları</p>
+            <p className="mt-1 text-xs leading-relaxed text-neutral-500">
+              Her ayın başında aktif sporculara borç kendiliğinden açılır. Tutar sporcunun aylık
+              aidatından hesaplanır; indirim ve dondurma sporcu kartından girilir.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="etiket" htmlFor="otomatik_tahakkuk">Ay başında otomatik borç</label>
+              <select id="otomatik_tahakkuk" name="otomatik_tahakkuk" className="alan"
+                defaultValue={a.otomatik_tahakkuk || "acik"}>
+                <option value="acik">Açık</option>
+                <option value="kapali">Kapalı (elle oluştur)</option>
+              </select>
+            </div>
+            <div>
+              <label className="etiket" htmlFor="son_odeme_gunu">Son ödeme günü</label>
+              <input id="son_odeme_gunu" name="son_odeme_gunu" type="number" min={1} max={28}
+                className="alan" defaultValue={a.son_odeme_gunu || "10"} />
+            </div>
+            <div>
+              <label className="etiket" htmlFor="kardes_indirimi">Kardeş indirimi (%)</label>
+              <input id="kardes_indirimi" name="kardes_indirimi" type="number" min={0} max={100}
+                className="alan" defaultValue={a.kardes_indirimi || "0"} />
+            </div>
+            <div>
+              <label className="etiket" htmlFor="kist_hesap">Ay ortası kayıtta kıst</label>
+              <select id="kist_hesap" name="kist_hesap" className="alan" defaultValue={a.kist_hesap || "kapali"}>
+                <option value="kapali">Kapalı (tam ay)</option>
+                <option value="acik">Açık (kalan gün kadar)</option>
+              </select>
+            </div>
+          </div>
+          <p className="text-xs leading-relaxed text-neutral-500">
+            Kardeş indirimi aynı velinin ikinci ve sonraki aktif sporcusuna uygulanır. Kıst açıkken ay
+            ortasında aktif yapılan sporcu yalnızca kalan günler kadar öder (tam TL&apos;ye yuvarlanır).
+          </p>
+          <KaydetDugmesi>Aidat kurallarını kaydet</KaydetDugmesi>
+        </form>
+
         <h2 className="mb-2 mt-8 px-1 bolum-basligi">
           Bekleyen yetki talepleri
         </h2>
