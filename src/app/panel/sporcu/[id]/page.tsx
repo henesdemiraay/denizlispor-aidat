@@ -1,15 +1,16 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import UstBaslik from "@/components/UstBaslik";
-import FotoYukle from "@/components/FotoYukle";
+import Pasaport, { type YolculukAdimi } from "@/components/Pasaport";
 import BelgeYukle from "@/components/BelgeYukle";
 import GelisimBolumu from "@/components/GelisimBolumu";
 import Ikon from "@/components/ui/Ikon";
 import { AidatRozeti, OdemeRozeti } from "@/components/Rozet";
-import { createClient } from "@/lib/supabase/server";
+import { oturum } from "@/lib/yetki";
+import { paraGorebilirMi } from "@/lib/roller";
 import { donemAdi, gunAdi, tl } from "@/lib/format";
 import { KART_ADI, MAC_TURU, macBasligi, skorMetni } from "@/lib/mac";
-import { YOKLAMA_DURUMU } from "@/lib/antrenman";
+import { DEGERLENDIRME_ALANLARI, YOKLAMA_DURUMU } from "@/lib/antrenman";
 import {
   BELGE_ADI,
   type Aidat,
@@ -45,11 +46,8 @@ export default async function SporcuDetay({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/giris");
+  const { supabase, user, rol } = await oturum();
+  const paraGorunur = paraGorebilirMi(rol);
 
   const { data: sporcuData } = await supabase
     .from("spor_sporcular")
@@ -145,6 +143,38 @@ export default async function SporcuDetay({
       deger: k.dakika,
     }));
 
+  // Pasaport: yolculuk adımları (gerçek kayıtlardan türetilir)
+  const yolculuk: YolculukAdimi[] = [];
+  yolculuk.push({ tarih: sporcu.kayit_tarihi, baslik: "Denizlispor'a katıldı", ayrinti: sporcu.yas_grubu ?? undefined });
+  const katildigi = [...yoklamaKayitlari]
+    .filter((y) => y.durum === "geldi" || y.durum === "gec")
+    .sort((a, b) => (a.tarih < b.tarih ? -1 : 1));
+  if (katildigi[0]) yolculuk.push({ tarih: katildigi[0].tarih, baslik: "İlk antrenman", ayrinti: katildigi[0].baslik });
+  const oynadigi = [...katilimlar].filter((k) => k.dakika > 0).reverse();
+  if (oynadigi[0]) {
+    const m = oynadigi[0].spor_maclar!;
+    yolculuk.push({ tarih: m.tarih, baslik: "İlk maç", ayrinti: `${macBasligi(m)} · ${oynadigi[0].dakika}′` });
+  }
+  const golAttigi = oynadigi.find((k) => k.gol > 0);
+  if (golAttigi) {
+    const m = golAttigi.spor_maclar!;
+    yolculuk.push({ tarih: m.tarih, baslik: "İlk gol", ayrinti: macBasligi(m), vurgu: true });
+  }
+  for (const d of degerlendirmeler) {
+    const puanlar = DEGERLENDIRME_ALANLARI.map((a) => d[a.anahtar as keyof typeof d] as number | null).filter(
+      (v): v is number => typeof v === "number",
+    );
+    if (!puanlar.length) continue;
+    const ort = puanlar.reduce((t, v) => t + v, 0) / puanlar.length;
+    yolculuk.push({
+      tarih: d.donem.length >= 10 ? d.donem : d.created_at.slice(0, 10),
+      baslik: `Dönem değerlendirmesi · ${ort.toLocaleString("tr-TR", { maximumFractionDigits: 1 })}`,
+      ayrinti: donemAdi(d.donem),
+    });
+  }
+  yolculuk.sort((a, b) => (a.tarih < b.tarih ? 1 : -1));
+  const antrenmanSayisi = katildigi.length;
+
   const bilgiler: [string, string][] = [
     ["Yaş grubu", sporcu.yas_grubu || "-"],
     ["Mevki", sporcu.mevki || "-"],
@@ -156,10 +186,14 @@ export default async function SporcuDetay({
     ["Veli telefonu", sporcu.veli_telefon || "-"],
     ["Acil durum", [sporcu.acil_kisi, sporcu.acil_telefon].filter(Boolean).join(" · ") || "-"],
     ["Kayıt tarihi", gunAdi(sporcu.kayit_tarihi)],
-    [
-      "Aylık aidat",
-      sporcu.durum === "onay_bekliyor" ? "Kulüp belirleyecek" : tl(sporcu.aylik_aidat),
-    ],
+    ...(paraGorunur
+      ? ([
+          [
+            "Aylık aidat",
+            sporcu.durum === "onay_bekliyor" ? "Kulüp belirleyecek" : tl(sporcu.aylik_aidat),
+          ],
+        ] as [string, string][])
+      : []),
   ];
 
   return (
@@ -173,14 +207,6 @@ export default async function SporcuDetay({
       />
 
       <div className="mx-auto w-full max-w-3xl px-4 pb-28">
-        <div className="-mt-9 flex justify-center">
-          <FotoYukle
-            sporcuId={sporcu.id}
-            basHarfler={`${sporcu.ad[0]}${sporcu.soyad[0]}`}
-            fotoUrl={sporcu.foto_yolu ? (linkler.get(sporcu.foto_yolu) ?? null) : null}
-          />
-        </div>
-
         {sporcu.durum === "onay_bekliyor" ? (
           <div className="kart mt-4 border-l-4 border-amber-400 px-4 py-3">
             <p className="text-sm font-semibold text-neutral-900">Kayıt onay bekliyor</p>
@@ -190,21 +216,17 @@ export default async function SporcuDetay({
           </div>
         ) : null}
 
-        <section className="mt-4 grid grid-cols-4 gap-2">
-          {[
-            ["Maç", String(macSayisi)],
-            ["Dakika", String(toplamDakika)],
-            ["Gol", String(gol)],
-            ["Asist", String(asist)],
-          ].map(([k, v]) => (
-            <div key={k} className="kart px-1 py-3 text-center">
-              <p className="text-lg font-extrabold text-neutral-900">{v}</p>
-              <p className="text-[10px] text-neutral-500">{k}</p>
-            </div>
-          ))}
-        </section>
+        <Pasaport
+          sporcu={sporcu}
+          fotoUrl={sporcu.foto_yolu ? (linkler.get(sporcu.foto_yolu) ?? null) : null}
+          sayilar={{ antrenman: antrenmanSayisi, mac: macSayisi, dakika: toplamDakika, gol }}
+          yolculuk={yolculuk}
+        />
 
-        <section className="mt-3 grid grid-cols-2 gap-3">
+        {paraGorunur ? (
+        <>
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">Aidat</h2>
+        <section className="grid grid-cols-2 gap-3">
           <div className="kart px-4 py-4">
             <p className="text-xs font-medium text-neutral-500">Kalan borç</p>
             <p
@@ -222,9 +244,11 @@ export default async function SporcuDetay({
         </section>
 
         {sporcu.durum !== "onay_bekliyor" ? (
-          <Link href="/panel/odeme-bildir" className="btn-birincil mt-3 w-full">
+          <Link href="/panel/odeme-bildir" className="btn-ikincil mt-3 w-full">
             Bu sporcu için ödeme bildir
           </Link>
+        ) : null}
+        </>
         ) : null}
 
         <h2 className="mb-2 mt-7 px-1 bolum-basligi">
@@ -371,6 +395,8 @@ export default async function SporcuDetay({
           <BelgeYukle sporcuId={sporcu.id} kullaniciId={user.id} />
         </div>
 
+        {paraGorunur ? (
+        <>
         <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Aidat dönemleri
         </h2>
@@ -431,6 +457,8 @@ export default async function SporcuDetay({
             ))}
           </div>
         )}
+        </>
+        ) : null}
       </div>
     </>
   );

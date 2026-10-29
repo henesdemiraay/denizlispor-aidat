@@ -11,7 +11,9 @@
   --yesil: #00a650;
   --yesil-koyu: #00632f;
   --siyah: #231f20;
-  --zemin: #f4f3f3;
+  --zemin: #231f20;
+  --metin: #ffffff;
+  color-scheme: dark;
 }
 
 html {
@@ -23,7 +25,7 @@ body {
   font-family: var(--font-sans);
   letter-spacing: 0;
   background: var(--zemin);
-  color: var(--siyah);
+  color: var(--metin);
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -49,7 +51,7 @@ summary::-webkit-details-marker {
 
 @layer components {
   .kart {
-    @apply rounded-2xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.04),0_6px_20px_-12px_rgba(16,24,40,0.18)] ring-1 ring-black/[0.04];
+    @apply rounded-[20px] bg-yuzey ring-1 ring-white/[0.06];
   }
   .btn {
     @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition active:scale-[.98] disabled:opacity-50 disabled:active:scale-100;
@@ -58,16 +60,16 @@ summary::-webkit-details-marker {
     @apply btn bg-yesil-500 font-bold text-siyah shadow-sm shadow-yesil-900/20 hover:bg-yesil-400;
   }
   .btn-ikincil {
-    @apply btn bg-white text-siyah ring-1 ring-siyah/15 hover:bg-neutral-50;
+    @apply btn bg-neutral-100 text-white ring-1 ring-white/10 hover:bg-neutral-200;
   }
   .btn-koyu {
-    @apply btn bg-siyah text-white hover:bg-neutral-800;
+    @apply btn bg-white font-bold text-siyah hover:bg-neutral-800;
   }
   .alan {
-    @apply w-full rounded-xl border border-neutral-300 bg-white px-3.5 py-3 text-[16px] outline-none transition placeholder:text-neutral-400 focus:border-yesil-500 focus:ring-2 focus:ring-yesil-500/25;
+    @apply w-full rounded-xl border border-neutral-300 bg-neutral-50 px-3.5 py-3 text-white text-[16px] outline-none transition placeholder:text-neutral-400 focus:border-yesil-500 focus:ring-2 focus:ring-yesil-500/25;
   }
   .etiket {
-    @apply mb-1.5 block text-sm font-medium text-neutral-700;
+    @apply mb-1.5 block text-sm font-medium text-neutral-600;
   }
   /* Bölüm üst başlığı: arşiv etiketi */
   .bolum-basligi {
@@ -99,5 +101,12 @@ summary::-webkit-details-marker {
   .arma-giris,
   .yazi-giris {
     animation: none;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }

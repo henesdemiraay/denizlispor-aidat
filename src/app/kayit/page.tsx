@@ -88,7 +88,7 @@ export default function KayitSayfasi() {
                 className={`flex cursor-pointer items-start gap-3 rounded-2xl border px-3.5 py-3 transition ${
                   rol === r.deger
                     ? "border-yesil-600 bg-yesil-50/70"
-                    : "border-neutral-200 bg-white"
+                    : "border-neutral-200 bg-yuzey"
                 }`}
               >
                 <input

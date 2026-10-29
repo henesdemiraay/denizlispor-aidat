@@ -19,9 +19,9 @@ export default function AuthKabuk({
         </p>
       </div>
 
-      <div className="flex-1 rounded-t-3xl bg-zemin px-5 pb-10 pt-7">
+      <div className="flex-1 rounded-t-3xl bg-yuzey px-5 pb-10 pt-7">
         <div className="mx-auto w-full max-w-sm">
-          <h2 className="manset text-[34px] text-siyah">{baslik}</h2>
+          <h2 className="manset text-[34px] text-white">{baslik}</h2>
           {altBaslik ? (
             <p className="mt-1 text-sm leading-relaxed text-neutral-500">{altBaslik}</p>
           ) : null}

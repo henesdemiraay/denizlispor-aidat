@@ -3,9 +3,9 @@
    seçici etiket; her işaretin üstüne gelince <title> ile değer görünür. */
 
 const YESIL = "#00A650";
-const YESIL_ACIK = "rgba(4,106,56,0.12)";
-const IZGARA = "#e6e9e8";
-const YAZI = "#8b918e";
+const YESIL_ACIK = "rgba(0,166,80,0.16)";
+const IZGARA = "#3E393A";
+const YAZI = "#ABA5A6";
 
 export function SutunGrafik({
   veri,
@@ -56,7 +56,7 @@ export function SutunGrafik({
               width={genislik}
               height={h}
               rx={4}
-              fill={sonuncu ? YESIL : "rgba(4,106,56,0.45)"}
+              fill={sonuncu ? YESIL : "rgba(0,166,80,0.45)"}
             />
             <text
               x={i * adim + adim / 2}
@@ -159,7 +159,7 @@ export function CizgiGrafik({
         return (
           <g key={`${v.etiket}-${i}`}>
             <title>{`${v.etiket}: ${v.deger}${birim}`}</title>
-            <circle cx={x} cy={y} r={sonuncu ? 5 : 4} fill="#fff" stroke={YESIL} strokeWidth={2} />
+            <circle cx={x} cy={y} r={sonuncu ? 5 : 4} fill="#FFFFFF" stroke={YESIL} strokeWidth={2} />
             {i === 0 || sonuncu || veri.length <= 4 ? (
               <text x={x} y={Y - 8} textAnchor="middle" fontSize={9} fill={YAZI} fontWeight={600}>
                 {v.etiket}
@@ -246,7 +246,7 @@ export function HalkaGrafik({
           textAnchor="middle"
           fontSize="24"
           fontWeight="800"
-          fill="#231F20"
+          fill="#FFFFFF"
         >
           %{Math.round(yuzde)}
         </text>

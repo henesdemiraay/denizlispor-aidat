@@ -96,7 +96,7 @@ export default async function AidatlarSayfasi({
                   <input type="hidden" name="donem" value={seciliDonem} />
                   <KaydetDugmesi
                     bekleyen="Oluşturuluyor…"
-                    className="rounded-xl bg-amber-900 px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                    className="rounded-xl bg-amber-500 px-4 py-2.5 text-sm font-bold text-siyah disabled:opacity-50"
                   >
                     Eksik tahakkukları tamamla
                   </KaydetDugmesi>

@@ -19,6 +19,17 @@ export type SurumNotu = {
 
 export const SURUM_NOTLARI: SurumNotu[] = [
   {
+    surum: "2026.10.29b",
+    tarih: "29 Ekim 2026",
+    baslik: "Sporcu Pasaportu ve Sezon Kartı",
+    maddeler: [
+      "Yeni koyu görünüm: kulübün siyahı üzerinde yeşil.",
+      "Ana sayfada sıradaki antrenman en üstte: gün, saat, yer.",
+      "Sporcu sayfası artık bir pasaport: ilk antrenmandan ilk gole kadar yolculuk tek bakışta.",
+      "Sezon Kartı: antrenör değerlendirmesiyle oluşan, yazdırıp saklanabilecek bir kart.",
+    ],
+  },
+  {
     surum: "2026.10.29",
     tarih: "29 Ekim 2026",
     baslik: "Yeni Denizlispor kimliği",

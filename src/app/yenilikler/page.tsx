@@ -15,7 +15,7 @@ export default async function Yenilikler() {
         {notlar.map((n) => (
           <article key={n.surum} className="kart px-5 py-5">
             <p className="bolum-basligi">{n.tarih}</p>
-            <h2 className="manset mt-1.5 text-[26px] text-siyah">{n.baslik}</h2>
+            <h2 className="manset mt-1.5 text-[26px] text-white">{n.baslik}</h2>
             <ul className="mt-3 list-disc space-y-1.5 pl-5 text-[15px] leading-snug text-neutral-700 marker:text-yesil-500">
               {n.maddeler.map((m) => (
                 <li key={m}>{m}</li>

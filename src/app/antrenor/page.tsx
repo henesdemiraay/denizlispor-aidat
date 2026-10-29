@@ -43,7 +43,7 @@ export default async function AntrenorAnaSayfa() {
         sag={
           <Link
             href="/antrenor/antrenmanlar?yeni=1"
-            className="flex h-9 items-center gap-1 rounded-full bg-white px-3 text-xs font-bold text-yesil-700"
+            className="flex h-9 items-center gap-1 rounded-full bg-yuzey px-3 text-xs font-bold text-yesil-700"
           >
             <Ikon ad="artı" className="h-4 w-4" />
             Antrenman

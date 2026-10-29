@@ -58,14 +58,14 @@ export default function FotoYukle({
           <img
             src={fotoUrl}
             alt="Sporcu fotoğrafı"
-            className="h-24 w-24 rounded-full object-cover ring-4 ring-white/70"
+            className="h-24 w-24 rounded-full object-cover ring-4 ring-siyah"
           />
         ) : (
-          <span className="flex h-24 w-24 items-center justify-center rounded-full bg-yesil-500 text-2xl font-bold text-siyah ring-4 ring-white/70">
+          <span className="flex h-24 w-24 items-center justify-center rounded-full bg-yesil-500 text-2xl font-bold text-siyah ring-4 ring-siyah">
             {basHarfler}
           </span>
         )}
-        <span className="absolute bottom-0 right-0 rounded-full bg-white px-2 py-1 text-[11px] font-semibold text-yesil-700 shadow">
+        <span className="absolute bottom-0 right-0 rounded-full bg-yuzey px-2 py-1 text-[11px] font-semibold text-yesil-700 shadow">
           {bekle ? "…" : fotoUrl ? "değiştir" : "ekle"}
         </span>
         <input type="file" accept="image/*" className="hidden" onChange={sec} disabled={bekle} />

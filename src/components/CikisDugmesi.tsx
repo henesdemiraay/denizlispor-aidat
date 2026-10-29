@@ -7,7 +7,7 @@ export default function CikisDugmesi({ tam }: { tam?: boolean }) {
         bekleyen="Çıkılıyor…"
         className={
           tam
-            ? "btn w-full bg-white text-red-600 ring-1 ring-red-600/20"
+            ? "btn w-full bg-yuzey text-red-600 ring-1 ring-red-600/20"
             : "rounded-full bg-white/12 px-3 py-1.5 text-xs font-semibold text-white/90 active:scale-95"
         }
       >

@@ -68,13 +68,13 @@ export default function SurumNotlari({ rol }: { rol: string }) {
   if (!notlar.length) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/55 sm:items-center">
+    <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/70 sm:items-center">
       <button aria-label="Kapat" className="absolute inset-0 cursor-default" onClick={kapat} />
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="surum-baslik"
-        className="yazi-giris relative max-h-[85dvh] w-full max-w-md overflow-y-auto rounded-t-[28px] bg-white px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3 shadow-2xl sm:rounded-[28px]"
+        className="yazi-giris relative max-h-[85dvh] w-full max-w-md overflow-y-auto rounded-t-[28px] bg-yuzey px-5 ring-1 ring-white/10 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3 shadow-2xl sm:rounded-[28px]"
       >
         <span aria-hidden className="mx-auto mb-4 block h-1 w-10 rounded-full bg-neutral-200 sm:hidden" />
         <p className="bolum-basligi">Yenilikler</p>
@@ -82,7 +82,7 @@ export default function SurumNotlari({ rol }: { rol: string }) {
         <div className="mt-2 space-y-6">
           {notlar.map((n) => (
             <article key={n.surum}>
-              <h2 id={n === notlar[0] ? "surum-baslik" : undefined} className="manset text-[30px] text-siyah">
+              <h2 id={n === notlar[0] ? "surum-baslik" : undefined} className="manset text-[30px] text-white">
                 {n.baslik}
               </h2>
               <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-neutral-500">

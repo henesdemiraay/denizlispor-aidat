@@ -66,6 +66,25 @@ export default async function VeliPaneli() {
 
   const ilkAd = profil?.ad_soyad?.trim().split(" ")[0];
 
+  // Sıradaki antrenman: Türkiye saatine göre bugün ve sonrası, çocuğun yaş grubuna uyan ilk kayıt
+  const bugunTR = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Istanbul" }).format(new Date());
+  const gruplar = new Set(sporcular.map((s) => s.yas_grubu).filter(Boolean));
+  const siradaki = [...antrenmanlar]
+    .filter((a) => a.tarih >= bugunTR && (!a.yas_grubu || gruplar.size === 0 || gruplar.has(a.yas_grubu)))
+    .sort((a, b) => (a.tarih + (a.baslangic ?? "")).localeCompare(b.tarih + (b.baslangic ?? "")))[0];
+  const gunFarki = siradaki
+    ? Math.round(
+        (new Date(siradaki.tarih + "T00:00:00").getTime() - new Date(bugunTR + "T00:00:00").getTime()) / 86400000,
+      )
+    : 0;
+  const siradakiGun = siradaki
+    ? gunFarki === 0
+      ? "Bugün"
+      : gunFarki === 1
+        ? "Yarın"
+        : new Date(siradaki.tarih + "T00:00:00").toLocaleDateString("tr-TR", { weekday: "long" })
+    : "";
+
   return (
     <>
       <UstBaslik
@@ -99,7 +118,7 @@ export default async function VeliPaneli() {
         {personelMi(rol) ? (
           <Link
             href={anaEkranYolu(rol)}
-            className="mt-4 flex items-center gap-3 rounded-2xl bg-neutral-900 px-4 py-3.5 text-white active:scale-[.99]"
+            className="mt-4 flex items-center gap-3 rounded-2xl bg-yuzey px-4 py-3.5 text-white ring-1 ring-yesil-500/40 active:scale-[.99]"
           >
             <Ikon ad="kalkan" className="h-5 w-5 text-yesil-500" />
             <div className="flex-1">
@@ -113,6 +132,27 @@ export default async function VeliPaneli() {
               </p>
             </div>
             <span className="text-white/40">›</span>
+          </Link>
+        ) : null}
+
+        {siradaki ? (
+          <Link href="/panel/antrenman" className="relative mt-4 block overflow-hidden rounded-[22px] bg-yesil-500 px-5 py-5 text-siyah active:scale-[.99]">
+            <svg aria-hidden viewBox="0 0 220 220" className="pointer-events-none absolute -right-14 -top-12 h-56 w-56 opacity-[0.18]">
+              <circle cx="110" cy="110" r="100" fill="none" stroke="#231F20" strokeWidth="1.5" />
+              <circle cx="110" cy="110" r="34" fill="none" stroke="#231F20" strokeWidth="1.5" />
+              <line x1="10" y1="110" x2="210" y2="110" stroke="#231F20" strokeWidth="1.5" />
+            </svg>
+            <p className="relative font-mono text-[11px] font-medium tracking-[0.08em]">SIRADAKİ ANTRENMAN</p>
+            <p className="manset relative mt-3 text-[50px] leading-[0.88]">
+              {siradakiGun}
+              {siradaki.baslangic ? ` ${siradaki.baslangic.slice(0, 5)}` : ""}
+            </p>
+            <p className="relative mt-3 text-[15px] font-medium">
+              {[siradaki.yer, siradaki.sure_dk ? `${siradaki.sure_dk} dk` : null, siradaki.baslik]
+                .filter(Boolean)
+                .join(" · ")}
+            </p>
+            {siradaki.hedef ? <p className="relative mt-1 text-sm">Hedef: {siradaki.hedef}</p> : null}
           </Link>
         ) : null}
 

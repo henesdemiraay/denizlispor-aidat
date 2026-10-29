@@ -40,7 +40,7 @@ export default async function SporcularSayfasi() {
         sag={
           <Link
             href="/yonetim/sporcular/yeni"
-            className="rounded-full bg-white px-3 py-1.5 text-xs font-bold text-yesil-700"
+            className="rounded-full bg-yuzey px-3 py-1.5 text-xs font-bold text-yesil-700"
           >
             + Yeni
           </Link>

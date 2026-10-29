@@ -18,7 +18,7 @@ export default function AltMenu({ ogeler }: { ogeler: MenuOgesi[] }) {
   }, null);
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-black/5 bg-white/92 backdrop-blur-lg">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t print:hidden border-white/10 bg-siyah/95 backdrop-blur-lg">
       <div
         className="mx-auto flex w-full max-w-3xl items-stretch"
         style={{ paddingBottom: "max(0.25rem, env(safe-area-inset-bottom))" }}
@@ -33,14 +33,14 @@ export default function AltMenu({ ogeler }: { ogeler: MenuOgesi[] }) {
             >
               <span
                 className={`flex h-8 w-14 items-center justify-center rounded-full transition ${
-                  aktif ? "bg-yesil-500/15 text-siyah" : "text-neutral-400"
+                  aktif ? "bg-yesil-500/15 text-yesil-500" : "text-neutral-400"
                 }`}
               >
                 <Ikon ad={o.ikon} className="h-[22px] w-[22px]" />
               </span>
               <span
                 className={`text-[11px] font-semibold leading-none ${
-                  aktif ? "font-bold text-siyah" : "text-neutral-500"
+                  aktif ? "font-bold text-yesil-500" : "text-neutral-500"
                 }`}
               >
                 {o.ad}

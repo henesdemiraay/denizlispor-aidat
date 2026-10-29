@@ -88,7 +88,7 @@ export default async function AidatAkisi({
                       className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
                         aktif
                           ? "bg-yesil-500 text-siyah shadow-sm"
-                          : "bg-white text-neutral-600 ring-1 ring-black/5"
+                          : "bg-yuzey text-neutral-600 ring-1 ring-white/10"
                       }`}
                     >
                       {donemAdi(d.donem)}
