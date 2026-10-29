@@ -1,6 +1,7 @@
 import Link from "next/link";
 import UstBaslik from "@/components/UstBaslik";
 import Ikon from "@/components/ui/Ikon";
+import BildirimZili from "@/components/BildirimZili";
 import { oturum } from "@/lib/yetki";
 import { gunAdi, tl } from "@/lib/format";
 import { ANTRENMAN_TURU, haftaBasi } from "@/lib/antrenman";
@@ -103,13 +104,16 @@ export default async function VeliPaneli() {
         baslik={ilkAd ? `Merhaba, ${ilkAd}` : "Merhaba"}
         altBaslik={rolAdi(rol)}
         sag={
+          <div className="flex items-center gap-2">
+          <BildirimZili yol="/panel/bildirimler" />
           <Link
             href="/panel/hesap"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/12"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/12"
             aria-label="Hesabım"
           >
             <Ikon ad="kisiler" className="h-5 w-5" />
           </Link>
+          </div>
         }
       >
         <div className="grid grid-cols-3 gap-2">

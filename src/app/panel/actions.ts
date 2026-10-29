@@ -33,3 +33,10 @@ export async function rizaKaydet(formData: FormData) {
   const devam = String(formData.get("devam") ?? "/git");
   redirect(devam.startsWith("/") && !devam.startsWith("//") ? devam : "/git", RedirectType.replace);
 }
+
+/** Kişinin görünür bildirimlerini okundu işaretler. */
+export async function bildirimleriOkundu() {
+  const supabase = await createClient();
+  await supabase.rpc("spor_bildirim_okundu", { p_idler: null });
+  revalidatePath("/panel/bildirimler");
+}

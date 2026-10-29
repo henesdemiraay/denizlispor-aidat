@@ -135,6 +135,55 @@ export default async function AyarlarSayfasi() {
           <KaydetDugmesi>Aidat kurallarını kaydet</KaydetDugmesi>
         </form>
 
+        <form action={ayarKaydet} className="kart mt-4 space-y-4 px-4 py-5">
+          <div>
+            <p className="text-sm font-bold text-neutral-900">Hatırlatma ve bildirimler</p>
+            <p className="mt-1 text-xs leading-relaxed text-neutral-500">
+              Veliye uygulamadaki bildirim kutusundan gider. Telefon bildirimi ve WhatsApp
+              eklendiğinde aynı kurallar ve sessiz saat geçerli olur.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="etiket" htmlFor="hatirlatma">Aidat hatırlatması</label>
+              <select id="hatirlatma" name="hatirlatma" className="alan" defaultValue={a.hatirlatma || "acik"}>
+                <option value="acik">Açık</option>
+                <option value="kapali">Kapalı</option>
+              </select>
+            </div>
+            <div>
+              <label className="etiket" htmlFor="bildirim_gelmedi">&quot;Gelmedi&quot; haberi veliye</label>
+              <select id="bildirim_gelmedi" name="bildirim_gelmedi" className="alan" defaultValue={a.bildirim_gelmedi || "acik"}>
+                <option value="acik">Açık</option>
+                <option value="kapali">Kapalı</option>
+              </select>
+            </div>
+            <div>
+              <label className="etiket" htmlFor="hatirlatma_once">Vadeden kaç gün önce</label>
+              <input id="hatirlatma_once" name="hatirlatma_once" className="alan" inputMode="numeric"
+                pattern="[0-9 ,]*" defaultValue={a.hatirlatma_once || "3"} />
+            </div>
+            <div>
+              <label className="etiket" htmlFor="hatirlatma_gecikme">Gecikmenin kaçıncı günü</label>
+              <input id="hatirlatma_gecikme" name="hatirlatma_gecikme" className="alan" inputMode="numeric"
+                pattern="[0-9 ,]*" defaultValue={a.hatirlatma_gecikme || "3,10"} />
+            </div>
+            <div>
+              <label className="etiket" htmlFor="sessiz_bas">Sessiz saat başlangıcı</label>
+              <input id="sessiz_bas" name="sessiz_bas" type="time" className="alan" defaultValue={a.sessiz_bas || "22:00"} />
+            </div>
+            <div>
+              <label className="etiket" htmlFor="sessiz_bit">Sessiz saat bitişi</label>
+              <input id="sessiz_bit" name="sessiz_bit" type="time" className="alan" defaultValue={a.sessiz_bit || "08:30"} />
+            </div>
+          </div>
+          <p className="text-xs leading-relaxed text-neutral-500">
+            Birden çok gün virgülle yazılır (ör. 7,3). Vade günü ayrıca hatırlatılır. Hatırlatmalar her
+            sabah 10:00&apos;da kutuya düşer.
+          </p>
+          <KaydetDugmesi>Hatırlatma kurallarını kaydet</KaydetDugmesi>
+        </form>
+
         <h2 className="mb-2 mt-8 px-1 bolum-basligi">
           Bekleyen yetki talepleri
         </h2>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import UstBaslik from "@/components/UstBaslik";
-import CikisDugmesi from "@/components/CikisDugmesi";
+import BildirimZili from "@/components/BildirimZili";
 import Ikon, { type IkonAdi } from "@/components/ui/Ikon";
 import { yoneticiGerekli } from "@/lib/yetki";
 import { bugununDonemi, donemAdi, gunAdi, tl } from "@/lib/format";
@@ -128,7 +128,7 @@ export default async function YonetimOzet() {
 
   return (
     <>
-      <UstBaslik baslik="Kulübün bugünü" altBaslik={profil?.ad_soyad ?? "Yönetim"} sag={<CikisDugmesi />} genis>
+      <UstBaslik baslik="Kulübün bugünü" altBaslik={profil?.ad_soyad ?? "Yönetim"} sag={<BildirimZili yol="/yonetim/bildirimler" />} genis>
         <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
           {kutular.map((k) => (
             <Link

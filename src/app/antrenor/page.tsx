@@ -1,6 +1,7 @@
 import Link from "next/link";
 import UstBaslik from "@/components/UstBaslik";
 import Ikon from "@/components/ui/Ikon";
+import BildirimZili from "@/components/BildirimZili";
 import { personelGerekli } from "@/lib/yetki";
 import { gunAdi } from "@/lib/format";
 import { ANTRENMAN_TURU, haftaBasi } from "@/lib/antrenman";
@@ -44,13 +45,16 @@ export default async function AntrenorAnaSayfa() {
         baslik="Antrenör paneli"
         altBaslik={profil?.ad_soyad ?? undefined}
         sag={
-          <Link
-            href="/antrenor/antrenmanlar?yeni=1"
-            className="flex h-9 items-center gap-1 rounded-full bg-yuzey px-3 text-xs font-bold text-yesil-700"
-          >
-            <Ikon ad="artı" className="h-4 w-4" />
-            Antrenman
-          </Link>
+          <div className="flex items-center gap-2">
+            <BildirimZili yol="/antrenor/bildirimler" />
+            <Link
+              href="/antrenor/antrenmanlar?yeni=1"
+              className="flex h-10 items-center gap-1 rounded-full bg-yuzey px-3 text-xs font-bold text-yesil-700"
+            >
+              <Ikon ad="artı" className="h-4 w-4" />
+              Antrenman
+            </Link>
+          </div>
         }
       >
         <div className="grid grid-cols-3 gap-2">

@@ -72,6 +72,11 @@ export default function YanMenu({
                     >
                       <Ikon ad={o.ikon} className="h-[18px] w-[18px] shrink-0" />
                       <span className="truncate">{o.ad}</span>
+                      {o.rozet ? (
+                        <span className="ml-auto rounded-full bg-yesil-500 px-1.5 py-0.5 font-mono text-[10px] font-bold leading-none text-anametin">
+                          {o.rozet > 99 ? "99+" : o.rozet}
+                        </span>
+                      ) : null}
                     </Link>
                   </li>
                 );

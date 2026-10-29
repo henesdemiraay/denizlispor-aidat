@@ -215,6 +215,12 @@ export async function ayarKaydet(formData: FormData) {
     "kist_hesap",
     "son_odeme_gunu",
     "otomatik_tahakkuk",
+    "hatirlatma",
+    "bildirim_gelmedi",
+    "hatirlatma_once",
+    "hatirlatma_gecikme",
+    "sessiz_bas",
+    "sessiz_bit",
   ].filter((a) => formData.has(a));
   const satirlar = anahtarlar.map((a) => ({
     anahtar: a,

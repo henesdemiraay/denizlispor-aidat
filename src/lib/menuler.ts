@@ -5,7 +5,7 @@ import type { IkonAdi } from "@/components/ui/Ikon";
  * geniş ekranda (≥1024 px) sol kenar menüsü kullanılır. Kenar menüsünde yer
  * olduğu için "Daha" altındaki bölümler doğrudan listelenir.
  */
-export type MenuOgesi = { yol: string; ad: string; ikon: IkonAdi };
+export type MenuOgesi = { yol: string; ad: string; ikon: IkonAdi; rozet?: number };
 export type MenuGrubu = { baslik?: string; ogeler: MenuOgesi[] };
 export type Menu = { alt: MenuOgesi[]; yan: MenuGrubu[] };
 
@@ -23,6 +23,7 @@ export const VELI_MENUSU: Menu = {
         { yol: "/panel", ad: "Bugün", ikon: "ev" },
         { yol: "/panel/antrenman", ad: "Antrenmanlar", ikon: "takvim" },
         { yol: "/panel/maclar", ad: "Maçlar", ikon: "futbol" },
+        { yol: "/panel/bildirimler", ad: "Bildirimler", ikon: "zil" },
         { yol: "/panel/duyurular", ad: "Duyurular", ikon: "megafon" },
         { yol: "/panel/arsiv", ad: "Altyapı arşivi", ikon: "arsiv" },
       ],
@@ -58,6 +59,7 @@ export const ANTRENOR_MENUSU: Menu = {
     {
       ogeler: [
         { yol: "/antrenor", ad: "Bugün", ikon: "ev" },
+        { yol: "/antrenor/bildirimler", ad: "Bildirimler", ikon: "zil" },
         { yol: "/antrenor/antrenmanlar", ad: "Antrenman günlüğü", ikon: "takvim" },
         { yol: "/antrenor/sporcular", ad: "Sporcular ve gelişim", ikon: "grafik" },
         { yol: "/antrenor/duyurular", ad: "Duyurular", ikon: "megafon" },
@@ -80,6 +82,7 @@ export const YONETIM_MENUSU: Menu = {
     {
       ogeler: [
         { yol: "/yonetim", ad: "Özet", ikon: "ev" },
+        { yol: "/yonetim/bildirimler", ad: "Bildirimler", ikon: "zil" },
         { yol: "/yonetim/sporcular", ad: "Sporcular", ikon: "kisiler" },
       ],
     },
@@ -125,4 +128,16 @@ export function aktifYol(yol: string, yollar: string[]) {
     if ((yol === y || yol.startsWith(`${y}/`)) && (!enIyi || y.length > enIyi.length)) enIyi = y;
   }
   return enIyi;
+}
+
+/** Kenar menüsündeki Bildirimler öğesine okunmamış sayısını ekler. */
+export function rozetEkle(menu: Menu, okunmamis: number): Menu {
+  if (!okunmamis) return menu;
+  return {
+    ...menu,
+    yan: menu.yan.map((g) => ({
+      ...g,
+      ogeler: g.ogeler.map((o) => (o.yol.endsWith("/bildirimler") ? { ...o, rozet: okunmamis } : o)),
+    })),
+  };
 }

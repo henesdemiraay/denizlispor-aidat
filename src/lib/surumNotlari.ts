@@ -19,6 +19,16 @@ export type SurumNotu = {
 
 export const SURUM_NOTLARI: SurumNotu[] = [
   {
+    surum: "2026.10.30a",
+    tarih: "30 Ekim 2026",
+    baslik: "Bildirimler ve esnek aidat",
+    maddeler: [
+      "Yeni bildirim kutusu: aidat hatırlatmaları, ödeme onayları ve antrenmana katılmama haberi tek yerde.",
+      "Aidat artık her ayın başında kendiliğinden oluşuyor; kardeş indirimi, burs ve dondurma kendiliğinden uygulanıyor.",
+      "Kısmi ödemelerde kalan tutar ayrıca gösteriliyor.",
+    ],
+  },
+  {
     surum: "2026.10.29h",
     tarih: "29 Ekim 2026",
     baslik: "Bilgisayarda da rahat",
