@@ -32,6 +32,15 @@ if (ortamUrl && !ortamUyumlu && typeof window === "undefined") {
 
 export const SUPABASE_URL = `https://${beklenen}.supabase.co`;
 
-export const SUPABASE_ANON_KEY =
+const anahtar =
   (ortamUyumlu ? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY : undefined) ||
   KULUP.supabase.yayinAnahtari;
+
+/** Kurulumu tamamlanmamış (anahtarı girilmemiş) kulüpte ekranlar açılır, giriş çalışmaz. */
+export const SUPABASE_HAZIR = Boolean(anahtar);
+
+if (!SUPABASE_HAZIR && typeof window === "undefined") {
+  console.warn(`[kulup] ${KULUP.kod}: Supabase yayın anahtarı yok; kurulum tamamlanmamış.`);
+}
+
+export const SUPABASE_ANON_KEY = anahtar || "kurulum-bekleniyor";
