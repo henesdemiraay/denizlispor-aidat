@@ -107,3 +107,9 @@ summary::-webkit-details-marker {
     print-color-adjust: exact;
   }
 }
+
+/* Karne: ekranda kâğıt, yazıcıda tam sayfa; koyu zemin basılmaz */
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body:has(.karne-kagit) { background: #fff !important; }
+}

@@ -43,6 +43,21 @@ export default async function AntrenmanGunlugu() {
       <UstBaslik baslik="Antrenman günlüğü" altBaslik="Hafta hafta ne çalışıldı" geri="/panel" />
 
       <div className="mx-auto w-full max-w-3xl px-4 pb-28">
+        <a
+          href="/panel/takvim"
+          download
+          className="kart mt-4 flex items-center gap-3 px-4 py-3.5 active:scale-[.99]"
+        >
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-yesil-50 text-yesil-700">
+            <Ikon ad="takvim" className="h-5 w-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-neutral-900">Telefon takvimine ekle</p>
+            <p className="text-xs text-neutral-500">Önümüzdeki antrenman ve maçlar, 1 saat önce hatırlatmalı</p>
+          </div>
+          <Ikon ad="indir" className="h-5 w-5 text-neutral-400" />
+        </a>
+
         {sirali.length === 0 ? (
           <div className="kart mt-4 px-5 py-10 text-center">
             <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-yesil-50 text-yesil-700">

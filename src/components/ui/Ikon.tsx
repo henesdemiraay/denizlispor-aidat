@@ -3,7 +3,8 @@ type Props = { ad: IkonAdi; className?: string };
 export type IkonAdi =
   | "ev" | "kisiler" | "takvim" | "cuzdan" | "grafik" | "daha"
   | "pano" | "futbol" | "ayar" | "cikis" | "belge" | "kalem"
-  | "kontrol" | "arsiv" | "kalkan" | "artı";
+  | "kontrol" | "arsiv" | "kalkan" | "artı"
+  | "indir" | "megafon" | "karne" | "zil";
 
 const YOLLAR: Record<IkonAdi, React.ReactNode> = {
   ev: <path d="M3 10.5 12 3l9 7.5M5.5 9.5V20h13V9.5" />,
@@ -69,6 +70,25 @@ const YOLLAR: Record<IkonAdi, React.ReactNode> = {
   ),
   kalkan: <path d="M12 3.4 5 6.2v5.3c0 4 2.9 7.6 7 9.1 4.1-1.5 7-5.1 7-9.1V6.2z" />,
   artı: <path d="M12 5.5v13M5.5 12h13" />,
+  indir: <path d="M12 4v11M7.5 10.8 12 15.3l4.5-4.5M5 19.5h14" />,
+  megafon: (
+    <>
+      <path d="M4 10v4a1.5 1.5 0 0 0 1.5 1.5H7l6 4V4.5l-6 4H5.5A1.5 1.5 0 0 0 4 10z" />
+      <path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11" />
+    </>
+  ),
+  karne: (
+    <>
+      <path d="M6 3.5h9l3.5 3.5v13.5H6z" />
+      <path d="M14.5 3.5V7.5h4M9 12h6M9 15.5h6M9 8.5h2.5" />
+    </>
+  ),
+  zil: (
+    <>
+      <path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z" />
+      <path d="M10 20.5a2.2 2.2 0 0 0 4 0" />
+    </>
+  ),
 };
 
 export default function Ikon({ ad, className = "h-6 w-6" }: Props) {

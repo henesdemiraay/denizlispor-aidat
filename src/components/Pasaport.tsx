@@ -144,6 +144,9 @@ export default function Pasaport({
       <Link href={`/panel/sporcu/${sporcu.id}/kart`} className="btn-birincil mt-5 w-full">
         Sezon kartını aç
       </Link>
+      <Link href={`/panel/sporcu/${sporcu.id}/karne`} className="btn-ikincil mt-2 w-full">
+        Sezon karnesi (yazdırılabilir)
+      </Link>
     </>
   );
 }

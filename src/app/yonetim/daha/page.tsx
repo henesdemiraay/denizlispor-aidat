@@ -38,6 +38,12 @@ const BOLUMLER: { yol: string; ad: string; aciklama: string; ikon: IkonAdi }[] =
     ikon: "ayar",
   },
   {
+    yol: "/yonetim/disa-aktar",
+    ad: "Dışa aktar",
+    aciklama: "Sporcu, aidat, ödeme, kasa ve yoklama listeleri (Excel)",
+    ikon: "indir",
+  },
+  {
     yol: "/yonetim/arsiv",
     ad: "Kayıt arşivi",
     aciklama: "Değiştirilen ve silinen kayıtların geçmişi",
