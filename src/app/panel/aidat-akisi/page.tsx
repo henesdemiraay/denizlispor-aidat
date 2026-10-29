@@ -87,7 +87,7 @@ export default async function AidatAkisi({
                       scroll={false}
                       className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
                         aktif
-                          ? "bg-yesil-500 text-siyah shadow-sm"
+                          ? "bg-yesil-500 text-anametin shadow-sm"
                           : "bg-yuzey text-neutral-600 ring-1 ring-white/10"
                       }`}
                     >

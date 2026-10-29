@@ -8,6 +8,12 @@ export const dynamic = "force-dynamic";
 
 const BOLUMLER: { yol: string; ad: string; aciklama: string; ikon: IkonAdi }[] = [
   {
+    yol: "/antrenor/duyurular",
+    ad: "Duyurular",
+    aciklama: "Velilere ve sporculara haber, okunma takibi",
+    ikon: "megafon",
+  },
+  {
     yol: "/yonetim/maclar",
     ad: "Maçlar",
     aciklama: "Fikstür, skor ve oynanan süreler",
@@ -36,6 +42,12 @@ const BOLUMLER: { yol: string; ad: string; aciklama: string; ikon: IkonAdi }[] =
     ad: "Ayarlar ve yetkiler",
     aciklama: "IBAN, iletişim, roller ve yetki talepleri",
     ikon: "ayar",
+  },
+  {
+    yol: "/yonetim/disa-aktar",
+    ad: "Dışa aktar",
+    aciklama: "Sporcu, aidat, ödeme, kasa ve yoklama listeleri (Excel)",
+    ikon: "indir",
   },
   {
     yol: "/yonetim/arsiv",

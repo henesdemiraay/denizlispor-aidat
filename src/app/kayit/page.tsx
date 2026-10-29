@@ -168,6 +168,11 @@ export default function KayitSayfasi() {
           Hesabınız var mı?{" "}
           <Link href="/giris" className="font-medium text-yesil-700">Giriş yapın</Link>
         </p>
+        <p className="text-center text-xs leading-relaxed text-neutral-500">
+          Hesap oluşturarak{" "}
+          <Link href="/kvkk" className="underline underline-offset-2">KVKK aydınlatma metnini</Link>{" "}
+          okuduğunuzu kabul edersiniz.
+        </p>
       </form>
     </AuthKabuk>
   );

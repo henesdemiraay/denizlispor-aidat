@@ -6,6 +6,8 @@ import { gunAdi, tl } from "@/lib/format";
 import { ANTRENMAN_TURU, haftaBasi } from "@/lib/antrenman";
 import { anaEkranYolu, paraGorebilirMi, personelMi, rolAdi, yoneticiMi } from "@/lib/roller";
 import type { Aidat, Antrenman, Sporcu, Yoklama } from "@/lib/types";
+import { KULUP } from "@/kulup";
+import { duyurulariGetir } from "@/lib/duyuru";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +24,7 @@ export default async function VeliPaneli() {
   const sporcular = (sporcularData ?? []) as Sporcu[];
   const idler = sporcular.map((s) => s.id);
 
-  const [{ data: aidatData }, { data: yoklamaData }, { data: antrenmanData }] = await Promise.all([
+  const [{ data: aidatData }, { data: yoklamaData }, { data: antrenmanData }, duyuruSonuc] = await Promise.all([
     idler.length && paraGorunur
       ? supabase.from("spor_aidatlar").select("*").in("sporcu_id", idler)
       : Promise.resolve({ data: [] as Aidat[] }),
@@ -30,7 +32,17 @@ export default async function VeliPaneli() {
       ? supabase.from("spor_yoklama").select("sporcu_id, durum").in("sporcu_id", idler)
       : Promise.resolve({ data: [] as Yoklama[] }),
     supabase.from("spor_antrenmanlar").select("*").order("tarih", { ascending: false }).limit(8),
+    duyurulariGetir(supabase, {
+      rol,
+      kullaniciId: user.id,
+      yasGruplari: sporcular.map((s) => s.yas_grubu),
+      limit: 10,
+    }),
   ]);
+  const yeniDuyurular = duyuruSonuc
+    ? duyuruSonuc.duyurular.filter((d) => !duyuruSonuc.okunan.has(d.id))
+    : [];
+  const vitrinDuyuru = yeniDuyurular[0] ?? duyuruSonuc?.duyurular.find((d) => d.onemli) ?? null;
 
   const aidatlar = (aidatData ?? []) as Aidat[];
   const yoklamalar = (yoklamaData ?? []) as Pick<Yoklama, "sporcu_id" | "durum">[];
@@ -135,12 +147,36 @@ export default async function VeliPaneli() {
           </Link>
         ) : null}
 
+        {vitrinDuyuru ? (
+          <Link
+            href="/panel/duyurular"
+            className="kart mt-4 flex items-start gap-3 px-4 py-3.5 ring-1 ring-yesil-500/40 active:scale-[.99]"
+          >
+            <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-yesil-500 text-anametin">
+              <Ikon ad="megafon" className="h-[18px] w-[18px]" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-yesil-500">
+                {yeniDuyurular.length > 1 ? `${yeniDuyurular.length} yeni duyuru` : "Kulüpten duyuru"}
+              </p>
+              <p className="mt-0.5 truncate text-sm font-bold text-neutral-900">{vitrinDuyuru.baslik}</p>
+              <p className="line-clamp-2 text-xs leading-relaxed text-neutral-500">{vitrinDuyuru.icerik}</p>
+            </div>
+            <span className="text-neutral-400">›</span>
+          </Link>
+        ) : duyuruSonuc && duyuruSonuc.duyurular.length ? (
+          <Link href="/panel/duyurular" className="mt-3 flex items-center gap-2 px-1 text-xs font-semibold text-yesil-700">
+            <Ikon ad="megafon" className="h-4 w-4" />
+            Duyurular ({duyuruSonuc.duyurular.length})
+          </Link>
+        ) : null}
+
         {siradaki ? (
-          <Link href="/panel/antrenman" className="relative mt-4 block overflow-hidden rounded-[22px] bg-yesil-500 px-5 py-5 text-siyah active:scale-[.99]">
+          <Link href="/panel/antrenman" className="relative mt-4 block overflow-hidden rounded-[22px] bg-yesil-500 px-5 py-5 text-anametin active:scale-[.99]">
             <svg aria-hidden viewBox="0 0 220 220" className="pointer-events-none absolute -right-14 -top-12 h-56 w-56 opacity-[0.18]">
-              <circle cx="110" cy="110" r="100" fill="none" stroke="#231F20" strokeWidth="1.5" />
-              <circle cx="110" cy="110" r="34" fill="none" stroke="#231F20" strokeWidth="1.5" />
-              <line x1="10" y1="110" x2="210" y2="110" stroke="#231F20" strokeWidth="1.5" />
+              <circle cx="110" cy="110" r="100" fill="none" stroke="currentColor" strokeWidth="1.5" />
+              <circle cx="110" cy="110" r="34" fill="none" stroke="currentColor" strokeWidth="1.5" />
+              <line x1="10" y1="110" x2="210" y2="110" stroke="currentColor" strokeWidth="1.5" />
             </svg>
             <p className="relative font-mono text-[11px] font-medium tracking-[0.08em]">SIRADAKİ ANTRENMAN</p>
             <p className="manset relative mt-3 text-[50px] leading-[0.88]">
@@ -238,7 +274,7 @@ export default async function VeliPaneli() {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={foto} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
                     ) : (
-                      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-yesil-500 font-manset text-2xl font-extrabold text-siyah">
+                      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-yesil-500 font-manset text-2xl font-extrabold text-anametin">
                         {s.ad[0]}
                         {s.soyad[0]}
                       </span>
@@ -250,7 +286,7 @@ export default async function VeliPaneli() {
                       <p className="truncate text-xs text-neutral-500">
                         {[s.yas_grubu, s.mevki, s.forma_no ? `#${s.forma_no}` : null]
                           .filter(Boolean)
-                          .join(" · ") || "Denizlispor Altyapı"}
+                          .join(" · ") || KULUP.ad}
                       </p>
                       {s.durum === "onay_bekliyor" ? (
                         <span className="rozet mt-2 bg-amber-100 text-amber-900">

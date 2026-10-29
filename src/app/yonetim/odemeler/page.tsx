@@ -83,7 +83,7 @@ export default async function OdemelerSayfasi() {
             <form action={odemeKarar}>
               <input type="hidden" name="id" value={o.id} />
               <input type="hidden" name="durum" value="onaylandi" />
-              <button className="rounded-lg bg-yesil-500 px-3 py-1.5 text-xs font-bold text-siyah">
+              <button className="rounded-lg bg-yesil-500 px-3 py-1.5 text-xs font-bold text-anametin">
                 Onayla
               </button>
             </form>

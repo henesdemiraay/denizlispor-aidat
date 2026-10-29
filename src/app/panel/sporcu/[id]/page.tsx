@@ -22,6 +22,7 @@ import {
   type Sporcu,
   type SporcuNotu,
 } from "@/lib/types";
+import { KULUP } from "@/kulup";
 
 export const dynamic = "force-dynamic";
 
@@ -145,7 +146,7 @@ export default async function SporcuDetay({
 
   // Pasaport: yolculuk adımları (gerçek kayıtlardan türetilir)
   const yolculuk: YolculukAdimi[] = [];
-  yolculuk.push({ tarih: sporcu.kayit_tarihi, baslik: "Denizlispor'a katıldı", ayrinti: sporcu.yas_grubu ?? undefined });
+  yolculuk.push({ tarih: sporcu.kayit_tarihi, baslik: `${KULUP.kisaAd} ailesine katıldı`, ayrinti: sporcu.yas_grubu ?? undefined });
   const katildigi = [...yoklamaKayitlari]
     .filter((y) => y.durum === "geldi" || y.durum === "gec")
     .sort((a, b) => (a.tarih < b.tarih ? -1 : 1));
@@ -201,7 +202,7 @@ export default async function SporcuDetay({
       <UstBaslik
         baslik={`${sporcu.ad} ${sporcu.soyad}`}
         altBaslik={
-          [sporcu.yas_grubu, sporcu.mevki].filter(Boolean).join(" · ") || "Denizlispor Altyapı"
+          [sporcu.yas_grubu, sporcu.mevki].filter(Boolean).join(" · ") || KULUP.ad
         }
         geri="/panel"
       />

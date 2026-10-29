@@ -96,7 +96,7 @@ export default async function SporcularSayfasi() {
                     </div>
                     <KaydetDugmesi
                       bekleyen="Onaylanıyor…"
-                      className="rounded-xl bg-yesil-500 px-4 py-2.5 text-sm font-bold text-siyah disabled:opacity-50"
+                      className="rounded-xl bg-yesil-500 px-4 py-2.5 text-sm font-bold text-anametin disabled:opacity-50"
                     >
                       Onayla ve aktif et
                     </KaydetDugmesi>

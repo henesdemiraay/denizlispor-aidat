@@ -19,6 +19,27 @@ export type SurumNotu = {
 
 export const SURUM_NOTLARI: SurumNotu[] = [
   {
+    surum: "2026.10.29e",
+    tarih: "29 Ekim 2026",
+    baslik: "Kulüp ekibine yeni araçlar",
+    roller: ["antrenor", "yardimci_antrenor", "baskan", "yonetici"],
+    maddeler: [
+      "Antrenör panelinden velilere ve sporculara duyuru yayınlayın; kaç kişinin okuduğunu görün.",
+      "Yönetim › Daha › Dışa aktar: sporcu, aidat, ödeme, kasa ve yoklama listeleri Excel'de.",
+    ],
+  },
+  {
+    surum: "2026.10.29d",
+    tarih: "29 Ekim 2026",
+    baslik: "Duyurular, takvim ve sezon karnesi",
+    maddeler: [
+      "Kulüpten duyurular artık ana ekranda; yenileri işaretli geliyor.",
+      "Antrenman sayfasından tek dokunuşla tüm antrenman ve maçları telefon takviminize ekleyin.",
+      "Sporcu sayfasında yazdırılabilir sezon karnesi: devam, değerlendirme, ölçüm ve maçlar tek sayfada.",
+      "Hesabım › Kişisel veriler: aydınlatma metni ve izinlerinizi buradan yönetebilirsiniz.",
+    ],
+  },
+  {
     surum: "2026.10.29c",
     tarih: "29 Ekim 2026",
     baslik: "Altyapı Arşivi",

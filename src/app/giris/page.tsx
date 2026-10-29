@@ -6,6 +6,7 @@ import { Suspense, useState } from "react";
 import AuthKabuk from "@/components/AuthKabuk";
 import Uyari from "@/components/Uyari";
 import { createClient } from "@/lib/supabase/client";
+import { KULUP } from "@/kulup";
 
 function Form() {
   const router = useRouter();
@@ -93,7 +94,7 @@ export default function GirisSayfasi() {
   return (
     <AuthKabuk
       baslik="Giriş yap"
-      altBaslik="Denizlispor Altyapı sporcu takip uygulaması — veli, sporcu, antrenör ve yönetim girişi."
+      altBaslik={`${KULUP.ad} sporcu takip uygulaması — veli, sporcu, antrenör ve yönetim girişi.`}
     >
       <Suspense fallback={null}>
         <Form />

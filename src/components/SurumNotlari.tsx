@@ -93,7 +93,7 @@ export default function SurumNotlari({ rol }: { rol: string }) {
                   <li key={m} className="flex gap-3 text-[15px] leading-snug text-neutral-800">
                     <span
                       aria-hidden
-                      className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-yesil-500 text-siyah"
+                      className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-yesil-500 text-anametin"
                     >
                       <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="m5 12 5 5 9-10" />

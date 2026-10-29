@@ -106,6 +106,16 @@ export default async function AntrenorAnaSayfa() {
             </span>
             <span className="text-sm font-semibold text-neutral-800">Sporcular</span>
           </Link>
+          <Link
+            href="/antrenor/duyurular"
+            className="kart col-span-2 flex items-center gap-3 px-4 py-4 active:scale-[.98]"
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-yesil-50 text-yesil-700">
+              <Ikon ad="megafon" className="h-5 w-5" />
+            </span>
+            <span className="flex-1 text-sm font-semibold text-neutral-800">Duyuru yayınla</span>
+            <span className="text-xs text-neutral-500">velilere · sporculara</span>
+          </Link>
         </div>
 
         <div className="mb-2 mt-7 flex items-center justify-between px-1">

@@ -8,6 +8,7 @@ import { degerlendirmeKaydet, notKaydet, olcumKaydet } from "@/app/antrenor/acti
 import { gunAdi } from "@/lib/format";
 import { DEGERLENDIRME_ALANLARI } from "@/lib/antrenman";
 import type { Degerlendirme, Olcum, Sporcu, SporcuNotu } from "@/lib/types";
+import { KULUP } from "@/kulup";
 
 export const dynamic = "force-dynamic";
 
@@ -84,7 +85,7 @@ export default async function AntrenorSporcuDetay({
         altBaslik={
           [sporcu.yas_grubu, sporcu.mevki, sporcu.forma_no ? `#${sporcu.forma_no}` : null]
             .filter(Boolean)
-            .join(" · ") || "Denizlispor Altyapı"
+            .join(" · ") || KULUP.ad
         }
         geri="/antrenor/sporcular"
       />

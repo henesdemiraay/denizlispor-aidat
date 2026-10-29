@@ -3,30 +3,28 @@ import { Suspense } from "react";
 import "./globals.css";
 import SwKayit from "@/components/SwKayit";
 import KayitBildirimi from "@/components/KayitBildirimi";
+import { KULUP, temaDegiskenleri } from "@/kulup";
 
 export const metadata: Metadata = {
-  title: "Denizlispor Sporcu Takip",
-  description:
-    "Denizlispor altyapı sporcuları için antrenman, gelişim ve aidat takip uygulaması",
+  metadataBase: new URL(KULUP.yayin.adres),
+  title: { default: `${KULUP.kisaAd} Sporcu Takip`, template: `%s · ${KULUP.kisaAd}` },
+  description: `${KULUP.ad} sporcuları için antrenman, gelişim ve aidat takip uygulaması`,
   manifest: "/manifest.webmanifest",
-  applicationName: "Denizlispor Sporcu Takip",
+  applicationName: `${KULUP.kisaAd} Sporcu Takip`,
   appleWebApp: {
     capable: true,
-    title: "Denizlispor",
+    title: KULUP.kisaAd,
     statusBarStyle: "black-translucent",
   },
   icons: {
-    icon: [
-      
-      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
-    ],
+    icon: [{ url: KULUP.arma, sizes: "512x512", type: "image/png" }],
     apple: "/icons/apple-touch-icon.png",
   },
   formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#231F20",
+  themeColor: KULUP.renkler.koyu,
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -39,6 +37,8 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <head>
+        {/* Beyaz etiket: kulübün renkleri kök değişkenlere yazılır */}
+        <style dangerouslySetInnerHTML={{ __html: temaDegiskenleri() }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

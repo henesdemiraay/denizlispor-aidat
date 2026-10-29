@@ -62,7 +62,7 @@ export default function Pasaport({
           {alt ? <p className="text-[13px] text-[#4A4546]">{alt}</p> : null}
           <div className="mt-1 flex flex-wrap gap-1.5">
             {sporcu.yas_grubu ? (
-              <span className="flex h-6 items-center rounded-full bg-yesil-500 px-2.5 text-[11px] font-bold text-siyah">
+              <span className="flex h-6 items-center rounded-full bg-yesil-500 px-2.5 text-[11px] font-bold text-anametin">
                 {sporcu.yas_grubu}
               </span>
             ) : null}
@@ -81,8 +81,8 @@ export default function Pasaport({
           viewBox="0 0 120 120"
           className="pointer-events-none absolute -bottom-9 -right-7 h-[120px] w-[120px] opacity-[0.14]"
         >
-          <circle cx="60" cy="60" r="52" fill="none" stroke="#00A650" strokeWidth="2" strokeDasharray="4 4" />
-          <circle cx="60" cy="60" r="38" fill="none" stroke="#00A650" strokeWidth="2" />
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--marka)" strokeWidth="2" strokeDasharray="4 4" />
+          <circle cx="60" cy="60" r="38" fill="none" stroke="var(--marka)" strokeWidth="2" />
         </svg>
       </section>
 
@@ -117,7 +117,7 @@ export default function Pasaport({
                     <span
                       className={`mt-1 h-3.5 w-3.5 shrink-0 rounded-full ${
                         a.vurgu
-                          ? "bg-[#FFFFFF] shadow-[0_0_0_4px_#00A650]"
+                          ? "bg-[#FFFFFF] shadow-[0_0_0_4px_var(--marka)]"
                           : son
                             ? "border-2 border-yesil-500"
                             : "bg-yesil-500"
@@ -143,6 +143,9 @@ export default function Pasaport({
 
       <Link href={`/panel/sporcu/${sporcu.id}/kart`} className="btn-birincil mt-5 w-full">
         Sezon kartını aç
+      </Link>
+      <Link href={`/panel/sporcu/${sporcu.id}/karne`} className="btn-ikincil mt-2 w-full">
+        Sezon karnesi (yazdırılabilir)
       </Link>
     </>
   );

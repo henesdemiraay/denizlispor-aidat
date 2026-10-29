@@ -1,5 +1,6 @@
 import Image from "next/image";
 import GeriDugmesi from "@/components/GeriDugmesi";
+import { KULUP } from "@/kulup";
 
 export default function UstBaslik({
   baslik,
@@ -32,8 +33,8 @@ export default function UstBaslik({
           <GeriDugmesi hedef={geri} />
         ) : (
           <Image
-            src="/icons/icon-512.png"
-            alt="Denizlispor"
+            src={KULUP.arma} unoptimized={KULUP.arma.endsWith(".svg")}
+            alt={`${KULUP.kisaAd} arması`}
             width={40}
             height={40}
             priority

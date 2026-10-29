@@ -2,10 +2,10 @@
    Tek seri kullanılır (çift eksen yok), ince işaretler, geri planda ızgara,
    seçici etiket; her işaretin üstüne gelince <title> ile değer görünür. */
 
-const YESIL = "#00A650";
-const YESIL_ACIK = "rgba(0,166,80,0.16)";
-const IZGARA = "#3E393A";
-const YAZI = "#ABA5A6";
+const YESIL = "var(--marka)";
+const YESIL_ACIK = "var(--marka-soluk)";
+const IZGARA = "var(--izgara)";
+const YAZI = "var(--grafik-yazi)";
 
 export function SutunGrafik({
   veri,
@@ -56,7 +56,7 @@ export function SutunGrafik({
               width={genislik}
               height={h}
               rx={4}
-              fill={sonuncu ? YESIL : "rgba(0,166,80,0.45)"}
+              fill={sonuncu ? YESIL : "var(--marka-yari)"}
             />
             <text
               x={i * adim + adim / 2}

@@ -1,0 +1,24 @@
+name: Kontrol
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  derle:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        kulup: [denizlispor, ornek]   # beyaz etiket: her kulüp yapılandırması ayrı derlenir
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run tipler
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_KULUP: ${{ matrix.kulup }}
+          NEXT_TELEMETRY_DISABLED: 1

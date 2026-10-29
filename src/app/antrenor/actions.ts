@@ -186,3 +186,29 @@ export async function olcumKaydet(formData: FormData) {
   revalidatePath(`/panel/sporcu/${sporcuId}`);
   bildir(`/antrenor/sporcular/${sporcuId}`, "Ölçüm kaydedildi");
 }
+
+export async function duyuruKaydet(formData: FormData) {
+  const supabase = await createClient();
+  const hedefRol = String(formData.get("hedef_rol") ?? "herkes");
+  const { error } = await supabase.from("spor_duyurular").insert({
+    baslik: String(formData.get("baslik") ?? "").trim(),
+    icerik: String(formData.get("icerik") ?? "").trim(),
+    hedef_rol: ["herkes", "veli", "sporcu", "personel"].includes(hedefRol) ? hedefRol : "herkes",
+    hedef_yas_grubu: metin(formData.get("hedef_yas_grubu")),
+    onemli: formData.get("onemli") === "on",
+    bitis_tarihi: metin(formData.get("bitis_tarihi")),
+  });
+  if (error) throw new Error(error.message);
+  revalidatePath("/antrenor/duyurular");
+  revalidatePath("/panel");
+  bildir("/antrenor/duyurular", "Duyuru yayınlandı");
+}
+
+export async function duyuruSil(formData: FormData) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("spor_duyurular").delete().eq("id", String(formData.get("id")));
+  if (error) throw new Error(error.message);
+  revalidatePath("/antrenor/duyurular");
+  revalidatePath("/panel");
+  bildir("/antrenor/duyurular", "Duyuru kaldırıldı");
+}

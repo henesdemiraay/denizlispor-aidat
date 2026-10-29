@@ -31,7 +31,7 @@ export default function KayitBildirimi() {
       className="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4"
     >
       <div className="yazi-giris flex items-center gap-2 rounded-full bg-[#FFFFFF] px-4 py-2.5 text-sm font-semibold text-siyah shadow-xl">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-yesil-500 text-[11px] text-siyah">
+        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-yesil-500 text-[11px] text-anametin">
           ✓
         </span>
         {mesaj}

@@ -3,6 +3,7 @@ import UstBaslik from "@/components/UstBaslik";
 import CikisDugmesi from "@/components/CikisDugmesi";
 import Ikon, { type IkonAdi } from "@/components/ui/Ikon";
 import { oturum } from "@/lib/yetki";
+import { KULUP } from "@/kulup";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +62,7 @@ export default async function Hesap() {
 
       <div className="mx-auto w-full max-w-3xl px-4 pb-28">
         <div className="kart -mt-3 flex items-center gap-4 px-4 py-5">
-          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-yesil-500 font-manset text-2xl font-extrabold text-siyah">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-yesil-500 font-manset text-2xl font-extrabold text-anametin">
             {(profil?.ad_soyad ?? user.email ?? "?").slice(0, 1).toUpperCase()}
           </span>
           <div className="min-w-0">
@@ -90,10 +91,21 @@ export default async function Hesap() {
           ))}
         </div>
 
+        <Link href="/kvkk/onay" className="kart mt-4 flex items-center gap-3 px-4 py-4">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-yesil-50 text-yesil-700">
+            <Ikon ad="kalkan" className="h-5 w-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-neutral-900">Kişisel veriler ve izinlerim</p>
+            <p className="text-xs text-neutral-500">KVKK aydınlatma metni, açık rıza ve bildirim tercihi</p>
+          </div>
+          <span className="text-neutral-300">›</span>
+        </Link>
+
         <div className="kart mt-4 px-4 py-4">
           <p className="text-sm font-semibold text-neutral-900">Uygulamayı telefona ekleyin</p>
           <p className="mt-1 text-xs leading-relaxed text-neutral-500">
-            Tarayıcı menüsünden <b>&ldquo;Ana ekrana ekle&rdquo;</b> deyin. Denizlispor arması
+            Tarayıcı menüsünden <b>&ldquo;Ana ekrana ekle&rdquo;</b> deyin. {KULUP.kisaAd} arması
             simge olur, uygulama tam ekran açılır.
           </p>
         </div>
@@ -103,7 +115,7 @@ export default async function Hesap() {
         </div>
 
         <p className="mt-6 text-center text-[11px] leading-relaxed text-neutral-400">
-          Denizlispor Altyapı · Sporcu Takip
+          {KULUP.ad} · Sporcu Takip
         </p>
       </div>
     </>

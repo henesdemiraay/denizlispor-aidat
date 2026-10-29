@@ -6,6 +6,7 @@ import { gunAdi } from "@/lib/format";
 import { macBasligi } from "@/lib/mac";
 import type { Mac, MacKatilim, Sporcu } from "@/lib/types";
 import KaydetDugmesi from "@/components/KaydetDugmesi";
+import { KULUP } from "@/kulup";
 
 export const dynamic = "force-dynamic";
 
@@ -88,7 +89,7 @@ export default async function MacDetay({
               </select>
             </div>
             <div>
-              <label className="etiket" htmlFor="skor_biz">Denizlispor golü</label>
+              <label className="etiket" htmlFor="skor_biz">{KULUP.kisaAd} golü</label>
               <input id="skor_biz" name="skor_biz" type="number" min="0" className="alan"
                 defaultValue={mac.skor_biz ?? ""} />
             </div>
