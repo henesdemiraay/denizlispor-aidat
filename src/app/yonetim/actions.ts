@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { hataIsle } from "@/lib/eylem";
 import { ROL_ADI } from "@/lib/roller";
 
 function sayi(v: FormDataEntryValue | null) {
@@ -241,13 +242,14 @@ export async function macKaydet(formData: FormData) {
 
   if (id) {
     const { error } = await supabase.from("spor_maclar").update(kayit).eq("id", id);
-    if (error) throw new Error(error.message);
+    hataIsle(error, `/yonetim/maclar/${id}`);
     revalidatePath(`/yonetim/maclar/${id}`);
     bildir(`/yonetim/maclar/${id}`, "Maç bilgileri kaydedildi");
   }
 
   const { data, error } = await supabase.from("spor_maclar").insert(kayit).select("id").single();
-  if (error) throw new Error(error.message);
+  hataIsle(error, "/yonetim/maclar");
+  if (!data) throw new Error("Maç kaydedilemedi.");
   revalidatePath("/yonetim/maclar");
   bildir(`/yonetim/maclar/${data.id}`, "Maç eklendi — şimdi kadroyu girebilirsiniz");
 }
@@ -258,7 +260,7 @@ export async function macSil(formData: FormData) {
     .from("spor_maclar")
     .delete()
     .eq("id", String(formData.get("id")));
-  if (error) throw new Error(error.message);
+  hataIsle(error, `/yonetim/maclar/${String(formData.get("id"))}`);
   revalidatePath("/yonetim/maclar");
   bildir("/yonetim/maclar", "Maç silindi");
 }
@@ -298,7 +300,7 @@ export async function kadroKaydet(formData: FormData) {
     const { error } = await supabase
       .from("spor_mac_katilim")
       .upsert(eklenecek, { onConflict: "mac_id,sporcu_id" });
-    if (error) throw new Error(error.message);
+    hataIsle(error, `/yonetim/maclar/${macId}`);
   }
   if (silinecek.length) {
     const { error } = await supabase
@@ -306,7 +308,7 @@ export async function kadroKaydet(formData: FormData) {
       .delete()
       .eq("mac_id", macId)
       .in("sporcu_id", silinecek);
-    if (error) throw new Error(error.message);
+    hataIsle(error, `/yonetim/maclar/${macId}`);
   }
 
   revalidatePath(`/yonetim/maclar/${macId}`);

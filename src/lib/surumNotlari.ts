@@ -19,6 +19,16 @@ export type SurumNotu = {
 
 export const SURUM_NOTLARI: SurumNotu[] = [
   {
+    surum: "2026.10.29g",
+    tarih: "29 Ekim 2026",
+    baslik: "Sezon arşivi: mühür, anılar, yükselenler",
+    maddeler: [
+      "Biten sezon kulüp yönetimince mühürlenir; o sezonun maç, kadro, antrenman ve yoklama kayıtları artık değişmez.",
+      "Arşivde sezonun kapanış notu, fotoğraflı anılar ve çocuğunuzun sezon özeti (maç, dakika, gol, devam) yer alır.",
+      "Yeni raf: kulüpten üst takımlara yükselen sporcular.",
+    ],
+  },
+  {
     surum: "2026.10.29f",
     tarih: "29 Ekim 2026",
     baslik: "Geri tuşu artık uygulama gibi",

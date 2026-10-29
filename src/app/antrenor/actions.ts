@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect, RedirectType } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { hataIsle } from "@/lib/eylem";
 
 function sayi(v: FormDataEntryValue | null) {
   const s = String(v ?? "").trim().replace(",", ".");
@@ -53,7 +54,7 @@ export async function antrenmanKaydet(formData: FormData) {
       .from("spor_antrenmanlar")
       .update({ ...kayit, updated_at: new Date().toISOString() })
       .eq("id", id);
-    if (error) throw new Error(error.message);
+    hataIsle(error, `/antrenor/antrenmanlar/${id}`);
     revalidatePath(`/antrenor/antrenmanlar/${id}`);
     bildir(`/antrenor/antrenmanlar/${id}`, "Antrenman güncellendi");
   }
@@ -63,7 +64,8 @@ export async function antrenmanKaydet(formData: FormData) {
     .insert({ ...kayit, ekleyen_id: user?.id ?? null })
     .select("id")
     .single();
-  if (error) throw new Error(error.message);
+  hataIsle(error, "/antrenor/antrenmanlar");
+  if (!data) throw new Error("Antrenman kaydedilemedi.");
 
   revalidatePath("/antrenor/antrenmanlar");
   revalidatePath("/panel/antrenman");
@@ -92,7 +94,7 @@ export async function yoklamaKaydet(formData: FormData) {
     const { error } = await supabase
       .from("spor_yoklama")
       .upsert(satirlar, { onConflict: "antrenman_id,sporcu_id" });
-    if (error) throw new Error(error.message);
+    hataIsle(error, `/antrenor/antrenmanlar/${antrenmanId}`);
   }
   if (silinecek.length) {
     const { error } = await supabase
@@ -100,7 +102,7 @@ export async function yoklamaKaydet(formData: FormData) {
       .delete()
       .eq("antrenman_id", antrenmanId)
       .in("sporcu_id", silinecek);
-    if (error) throw new Error(error.message);
+    hataIsle(error, `/antrenor/antrenmanlar/${antrenmanId}`);
   }
 
   revalidatePath(`/antrenor/antrenmanlar/${antrenmanId}`);

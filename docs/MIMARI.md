@@ -78,5 +78,18 @@ PostgREST'in "tablo yok" hatasını tanır; ilgili ekran gizlenir ya da yönetic
 
 - Taban şema (16 tablo, 24 fonksiyon, 51 politika) henüz bu depoda değil; taşıma betiklerinden
   `supabase/migrations/00000000_taban.sql` olarak eklenecek.
-- Otomatik test yok; CI tip kontrolü ve her kulüp yapılandırması için derleme yapıyor.
+- Testler: `npm test` (vitest). Göçler `tests/sql/` altında PGlite (WASM Postgres) ile,
+  Supabase'in asgari taklidi üzerinde sınanır: RLS, roller, tetikleyiciler. Taban şema depoya
+  girince taklit yerine o kullanılmalı. Arayüz için uçtan uca test henüz yok.
 - Ücretsiz Supabase planında otomatik yedek yok; satıştan önce Pro.
+
+## Sezon mühürü (2026-10-30 göçü)
+- `spor_sezonlar`: sezon başına durum (açık/mühürlü), kapanış notu, mühürleme anındaki özet
+  (`spor_sezon_ozeti`; ad soyad tutmaz, yalnızca sporcu kimliği ve sayılar) ve mühür geçmişi.
+- Mühür yalnızca bitmiş sezona (31 Ağustos sonrası) ve yalnızca yönetimce vurulur; açmak gerekçe ister.
+- `spor_muhur_koruma` tetikleyicisi mühürlü sezonun maç, kadro, antrenman ve yoklamasını kilitler.
+  Sporcu silinince zincirleme silmeye izin verir (KVKK silme hakkı).
+- Uygulamada mühür hatası genel hata ekranına değil, `?uyari=` ile ekrandaki kırmızı bildirime düşer
+  (`lib/eylem.ts › hataIsle`).
+- Anılar `spor-arsiv` kovasında (özel; okuma: girişli herkes, yükleme: personel, silme: yönetim).
+

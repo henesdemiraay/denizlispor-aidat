@@ -31,6 +31,7 @@ export default function GezinmeIzi() {
     const yerDegistir =
       yerDegistirAl() ||
       window.location.search.includes("kaydedildi=") ||
+      window.location.search.includes("uyari=") ||
       KAPI_EKRANLARI.includes(yigin[yigin.length - 1] ?? "");
 
     if (popstate.current) {

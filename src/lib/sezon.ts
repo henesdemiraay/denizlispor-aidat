@@ -19,6 +19,16 @@ export function sezonIcinde(tarih: string | null | undefined, yil: number) {
   return t >= bas && t <= bit;
 }
 
+/** Türkiye saatiyle bugünün tarihi (YYYY-AA-GG) */
+export function bugunTR() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Istanbul" }).format(new Date());
+}
+
+/** Sezon bitti mi? Mühürleme yalnızca bitmiş sezonda yapılır (veritabanı kuralıyla aynı). */
+export function sezonBittiMi(yil: number, bugun = bugunTR()) {
+  return sezonAraligi(yil).bit < bugun;
+}
+
 export function bugunkuSezon() {
   return sezonYili(new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Istanbul" }).format(new Date()));
 }
