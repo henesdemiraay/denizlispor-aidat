@@ -14,7 +14,9 @@ Süre: bir oturum. Kod değişmez; yalnızca bir yapılandırma dosyası ve arma
 ## 2. Veritabanı (kulüp yöneticisi hesabıyla, kulübe ait hesapta)
 
 1. Supabase'te yeni proje; bölge kulübe yakın (Türkiye için Frankfurt ya da İrlanda).
-2. SQL Editor'da sırayla: taban şema, ardından `supabase/migrations/` içindeki dosyalar (tarih sırasıyla).
+2. SQL Editor'da `supabase/migrations/` içindeki dosyaları ad sırasıyla çalıştırın: önce
+   `00000000_taban.sql` (boş projeye tek seferde), sonra tarihli göçler. Bu sıra `npm test`
+   içinde her gönderimde boş bir veritabanında sınanır. İlk kayıt olan hesap otomatik yönetici olur.
 3. Authentication › URL Configuration: Site URL = kulübün adresi; Redirect URLs = `https://<adres>/**`.
 4. Şifre kuralı ≥ 8 karakter, harf + rakam. E-posta onayı için özel SMTP tanımlayın.
 5. Proje kodunu ve **publishable** anahtarı JSON'daki `supabase` alanına yazın.

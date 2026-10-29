@@ -76,11 +76,9 @@ PostgREST'in "tablo yok" hatasını tanır; ilgili ekran gizlenir ya da yönetic
 
 ## Bilinen eksikler
 
-- Taban şema (16 tablo, 24 fonksiyon, 51 politika) henüz bu depoda değil; taşıma betiklerinden
-  `supabase/migrations/00000000_taban.sql` olarak eklenecek.
-- Testler: `npm test` (vitest). Göçler `tests/sql/` altında PGlite (WASM Postgres) ile,
-  Supabase'in asgari taklidi üzerinde sınanır: RLS, roller, tetikleyiciler. Taban şema depoya
-  girince taklit yerine o kullanılmalı. Arayüz için uçtan uca test henüz yok.
+- Testler: `npm test` (vitest). `tests/sql/` boş bir PGlite (WASM Postgres) veritabanına Supabase
+  platform taklidi + `supabase/migrations/` içindeki tüm göçleri (taban dahil) sırayla kurar ve
+  RLS, rol, tetikleyici ve kova kurallarını gerçek şema üzerinde sınar. Arayüz için uçtan uca test yok.
 - Ücretsiz Supabase planında otomatik yedek yok; satıştan önce Pro.
 
 ## Sezon mühürü (2026-10-30 göçü)
