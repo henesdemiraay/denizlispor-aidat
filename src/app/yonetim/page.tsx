@@ -6,6 +6,7 @@ import { yoneticiGerekli } from "@/lib/yetki";
 import { bugununDonemi, donemAdi, gunAdi, tl } from "@/lib/format";
 import { arsivGetir, sezonDurumu } from "@/lib/arsiv";
 import { bugunkuSezon, bugunTR, sezonAdi } from "@/lib/sezon";
+import { kalanGunMetni, yaklasanDogumGunleri } from "@/lib/dogumGunu";
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +36,7 @@ export default async function YonetimOzet() {
     { data: macData },
     arsiv,
   ] = await Promise.all([
-    supabase.from("spor_sporcular").select("id, ad, soyad, durum, yas_grubu"),
+    supabase.from("spor_sporcular").select("id, ad, soyad, durum, yas_grubu, dogum_tarihi"),
     supabase.from("spor_aidatlar").select("id, sporcu_id, donem, tutar, durum, son_odeme_tarihi"),
     supabase.from("spor_odemeler").select("id, tutar, durum"),
     supabase.from("spor_rol_talepleri").select("id").eq("durum", "beklemede"),
@@ -59,9 +60,10 @@ export default async function YonetimOzet() {
     arsivGetir(supabase),
   ]);
 
-  const sporcular = (sporcuData ?? []) as { id: string; ad: string; soyad: string; durum: string; yas_grubu: string | null }[];
+  const sporcular = (sporcuData ?? []) as { id: string; ad: string; soyad: string; durum: string; yas_grubu: string | null; dogum_tarihi: string | null }[];
   const aidatlar = (aidatData ?? []) as { sporcu_id: string; donem: string; tutar: number; durum: string; son_odeme_tarihi: string | null }[];
   const aktif = sporcular.filter((s) => s.durum === "aktif");
+  const dogumGunleri = yaklasanDogumGunleri(aktif, bugun);
   const onayBekleyenSporcu = sporcular.filter((s) => s.durum === "onay_bekliyor").length;
 
   // Bu dönemin tahsilat oranı
@@ -229,6 +231,25 @@ export default async function YonetimOzet() {
                 )}
               </div>
             </div>
+
+            {dogumGunleri.length ? (
+              <div>
+                <h2 className="mb-2 px-1 bolum-basligi">Doğum günleri · 7 gün</h2>
+                <div className="kart divide-y divide-white/[0.06]">
+                  {dogumGunleri.map(({ sporcu, kalan, yas }) => (
+                    <div key={sporcu.id} className="flex items-center gap-3 px-4 py-3">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-neutral-900">{sporcu.ad} {sporcu.soyad}</p>
+                        <p className="text-xs text-neutral-500">{yas} yaşına giriyor{sporcu.yas_grubu ? ` · ${sporcu.yas_grubu}` : ""}</p>
+                      </div>
+                      <span className={`rozet ${kalan === 0 ? "bg-yesil-500 text-anametin" : "bg-neutral-100 text-neutral-700"}`}>
+                        {kalanGunMetni(kalan)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-1">
               <Link href="/yonetim/sporcular/yeni" className="btn-birincil">

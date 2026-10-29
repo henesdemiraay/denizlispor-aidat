@@ -5,6 +5,8 @@ import { personelGerekli } from "@/lib/yetki";
 import { gunAdi } from "@/lib/format";
 import { ANTRENMAN_TURU, haftaBasi } from "@/lib/antrenman";
 import type { Antrenman } from "@/lib/types";
+import { kalanGunMetni, yaklasanDogumGunleri } from "@/lib/dogumGunu";
+import { bugunTR } from "@/lib/sezon";
 
 export const dynamic = "force-dynamic";
 
@@ -16,12 +18,13 @@ export default async function AntrenorAnaSayfa() {
 
   const [{ data: antrenmanData }, { data: sporcuData }, { data: yoklamaData }] = await Promise.all([
     supabase.from("spor_antrenmanlar").select("*").order("tarih", { ascending: false }).limit(30),
-    supabase.from("spor_sporcular").select("id, durum, yas_grubu"),
+    supabase.from("spor_sporcular").select("id, ad, soyad, durum, yas_grubu, dogum_tarihi"),
     supabase.from("spor_yoklama").select("antrenman_id, durum"),
   ]);
 
   const antrenmanlar = (antrenmanData ?? []) as Antrenman[];
-  const sporcular = (sporcuData ?? []) as { id: string; durum: string; yas_grubu: string | null }[];
+  const sporcular = (sporcuData ?? []) as { id: string; ad: string; soyad: string; durum: string; yas_grubu: string | null; dogum_tarihi: string | null }[];
+  const dogumGunleri = yaklasanDogumGunleri(sporcular.filter((s) => s.durum === "aktif"), bugunTR());
   const yoklamalar = (yoklamaData ?? []) as { antrenman_id: string; durum: string }[];
 
   const aktifSporcu = sporcular.filter((s) => s.durum === "aktif").length;
@@ -117,6 +120,25 @@ export default async function AntrenorAnaSayfa() {
             <span className="text-xs text-neutral-500">velilere · sporculara</span>
           </Link>
         </div>
+
+        {dogumGunleri.length ? (
+          <>
+            <h2 className="mb-2 mt-7 px-1 bolum-basligi">Doğum günleri · 7 gün</h2>
+            <div className="kart divide-y divide-white/[0.06]">
+              {dogumGunleri.map(({ sporcu, kalan, yas }) => (
+                <Link key={sporcu.id} href={`/antrenor/sporcular/${sporcu.id}`} className="flex items-center gap-3 px-4 py-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold text-neutral-900">{sporcu.ad} {sporcu.soyad}</p>
+                    <p className="text-xs text-neutral-500">{yas} yaşına giriyor{sporcu.yas_grubu ? ` · ${sporcu.yas_grubu}` : ""}</p>
+                  </div>
+                  <span className={`rozet ${kalan === 0 ? "bg-yesil-500 text-anametin" : "bg-neutral-100 text-neutral-700"}`}>
+                    {kalanGunMetni(kalan)}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </>
+        ) : null}
 
         <div className="mb-2 mt-7 flex items-center justify-between px-1">
           <h2 className="bolum-basligi">

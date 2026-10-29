@@ -94,6 +94,22 @@ summary::-webkit-details-marker {
 }
 .yazi-giris { animation: yaziGiris 700ms 420ms cubic-bezier(.2,.8,.2,1) both; }
 
+/* Kenar menüsü: ince, zeminle uyumlu kaydırma çubuğu */
+.ince-kaydirma {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.12) transparent;
+}
+
+/* Sıkı satır yüksekliğindeki manşetler tek satıra kırpılınca (truncate / line-clamp)
+   Ü Ö İ Ş Ğ gibi harflerin üst işaretleri kesilmesin: üstte pay bırak, düzeni kaydırma. */
+.manset.truncate,
+.manset[class*="line-clamp"],
+.truncate > .manset,
+.font-manset.truncate {
+  padding-top: 0.14em;
+  margin-top: -0.14em;
+}
+
 /* Geniş ekranda kulüp arması kenar menüsünde; başlıkta tekrar edilmez. */
 @media (min-width: 1024px) {
   .kabuk .ust-arma {
