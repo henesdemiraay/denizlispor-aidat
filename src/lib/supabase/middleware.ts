@@ -24,9 +24,11 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // getClaims: oturum jetonunu imzasından yerel olarak doğrular (yeni imza anahtarlarında
+  // Auth sunucusuna gitmez); gerekiyorsa süresi dolan oturumu da tazeler. Her sayfa
+  // geçişinde bir ağ çağrısı eksilir.
+  const { data } = await supabase.auth.getClaims();
+  const user = data?.claims ?? null;
 
   const yol = request.nextUrl.pathname;
   const korumasiz = KORUMASIZ.some((p) => yol.startsWith(p));

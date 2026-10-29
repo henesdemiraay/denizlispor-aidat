@@ -1,21 +1,28 @@
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { anaEkranYolu, antrenorMu, paraGorebilirMi, personelMi, yoneticiMi } from "@/lib/roller";
 import type { Profil } from "@/lib/types";
 
-/** Oturumu ve profili getirir; profil yoksa veritabanı tarafında oluşturulur. */
-export async function oturum() {
+/**
+ * Oturumu ve profili getirir; profil yoksa veritabanı tarafında oluşturulur.
+ * `cache`: aynı istek içinde düzen (layout) ve sayfa birlikte çağırınca tek sefer çalışır.
+ * Kullanıcı jetondan (getClaims) okunur; middleware isteği zaten doğruladı.
+ */
+export const oturum = cache(async () => {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/giris");
+  const [{ data: claimData }, { data }] = await Promise.all([
+    supabase.auth.getClaims(),
+    supabase.rpc("spor_profil"),
+  ]);
+  const claims = claimData?.claims;
+  if (!claims?.sub) redirect("/giris");
+  const user = { id: claims.sub, email: (claims.email as string | undefined) ?? null };
 
-  const { data } = await supabase.rpc("spor_profil");
   const profil = (data ?? null) as Profil | null;
 
   return { supabase, user, profil, rol: (profil?.rol ?? "veli") as string };
-}
+});
 
 /** Yönetici veya başkan */
 export async function yoneticiGerekli() {
