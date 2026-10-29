@@ -43,4 +43,5 @@ export const BILDIRIM_TURU: Record<string, { ad: string; acil?: boolean }> = {
   yeni_odeme: { ad: "Onay bekliyor", acil: true },
   yeni_kayit: { ad: "Onay bekliyor", acil: true },
   deneme_dersi: { ad: "Deneme dersi" },
+  zimmet_iade: { ad: "Zimmet iadesi" },
 };

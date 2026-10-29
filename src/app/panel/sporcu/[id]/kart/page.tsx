@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import UstBaslik from "@/components/UstBaslik";
 import YazdirDugmesi from "@/components/YazdirDugmesi";
+import KartPaylas from "@/components/KartPaylas";
 import { oturum } from "@/lib/yetki";
 import { DEGERLENDIRME_ALANLARI } from "@/lib/antrenman";
 import { donemAdi } from "@/lib/format";
@@ -60,7 +61,7 @@ export default async function SezonKarti({ params }: { params: Promise<{ id: str
       </div>
 
       <div className="mx-auto w-full max-w-md px-4 pb-28 pt-5 print:max-w-none print:p-0">
-        <article className="rounded-[26px] bg-yesil-500 p-[3px] print:break-inside-avoid">
+        <article id="sezon-karti" className="rounded-[26px] bg-yesil-500 p-[3px] print:break-inside-avoid">
           <div className="relative flex flex-col overflow-hidden rounded-[23px] bg-siyah px-6 pb-6 pt-6 text-white">
             <svg aria-hidden viewBox="0 0 560 560" className="pointer-events-none absolute left-0 top-16 w-full opacity-[0.14]">
               <rect x="40" y="40" width="480" height="480" fill="none" stroke="#FFFFFF" strokeWidth="2" />
@@ -88,7 +89,7 @@ export default async function SezonKarti({ params }: { params: Promise<{ id: str
               </span>
               {foto ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={foto} alt="" className="ml-auto h-44 w-36 rounded-2xl object-cover ring-1 ring-white/10" />
+                <img src={foto} alt="" crossOrigin="anonymous" className="ml-auto h-44 w-36 rounded-2xl object-cover ring-1 ring-white/10" />
               ) : (
                 <span className="manset ml-auto flex h-44 w-36 items-center justify-center rounded-2xl bg-yuzey text-5xl text-neutral-400 ring-1 ring-white/10">
                   {sporcu.ad[0]}
@@ -134,7 +135,8 @@ export default async function SezonKarti({ params }: { params: Promise<{ id: str
           </div>
         </article>
 
-        <div className="mt-4">
+        <div className="mt-4 space-y-2.5">
+          <KartPaylas hedef="sezon-karti" dosyaAdi={`sezon-karti-${sporcu.ad}-${sezon}`.toLocaleLowerCase("tr-TR").replace(/[^a-z0-9ğüşıöç–-]+/g, "-")} />
           <YazdirDugmesi />
         </div>
       </div>

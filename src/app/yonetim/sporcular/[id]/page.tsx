@@ -5,6 +5,10 @@ import { AidatRozeti, OdemeRozeti } from "@/components/Rozet";
 import { yoneticiGerekli } from "@/lib/yetki";
 import { belgeSil } from "@/app/yonetim/actions";
 import { donemAdi, gunAdi, tl } from "@/lib/format";
+import ZimmetForm from "@/components/ZimmetForm";
+import ZimmetListesi from "@/components/ZimmetListesi";
+import { bugunTR } from "@/lib/sezon";
+import type { Zimmet } from "@/lib/zimmet";
 import { BELGE_ADI, type Aidat, type Belge, type Odeme, type Sporcu } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -25,14 +29,19 @@ export default async function SporcuDuzenle({
   if (!data) notFound();
   const sporcu = data as Sporcu;
 
-  const [{ data: aidatData }, { data: odemeData }, { data: belgeData }] = await Promise.all([
+  const [{ data: aidatData }, { data: odemeData }, { data: belgeData }, zimmetSonuc] = await Promise.all([
     supabase.from("spor_aidatlar").select("*").eq("sporcu_id", id)
       .order("donem", { ascending: false }),
     supabase.from("spor_odemeler").select("*").eq("sporcu_id", id)
       .order("odeme_tarihi", { ascending: false }),
     supabase.from("spor_belgeler").select("*").eq("sporcu_id", id)
       .order("created_at", { ascending: false }),
+    supabase.from("spor_zimmetler").select("*").eq("sporcu_id", id)
+      .order("verilis", { ascending: false }),
   ]);
+  const zimmetVar = !zimmetSonuc.error;
+  const zimmetler = (zimmetSonuc.data ?? []) as Zimmet[];
+  const bugun = bugunTR();
   const aidatlar = (aidatData ?? []) as Aidat[];
   const odemeler = (odemeData ?? []) as Odeme[];
   const belgeler = (belgeData ?? []) as Belge[];
@@ -116,6 +125,21 @@ export default async function SporcuDuzenle({
             ))}
           </div>
         )}
+
+        {zimmetVar ? (
+          <>
+            <h2 className="mb-2 mt-8 px-1 bolum-basligi">
+              Zimmet ({zimmetler.filter((z) => !z.iade_edildi).length} açık)
+            </h2>
+            <ZimmetListesi liste={zimmetler} bugun={bugun} donus={`/yonetim/sporcular/${id}`} bos="Bu sporcuda kulübe ait eşya yok." />
+            <details className="kart mt-2 px-4 py-3">
+              <summary className="cursor-pointer text-sm font-semibold text-neutral-800">+ Eşya ver</summary>
+              <div className="mt-3">
+                <ZimmetForm bugun={bugun} donus={`/yonetim/sporcular/${id}`} sporcuId={id} />
+              </div>
+            </details>
+          </>
+        ) : null}
 
         <h2 className="mb-2 mt-8 px-1 bolum-basligi">
           Aidat dönemleri ({aidatlar.length})

@@ -38,12 +38,20 @@ export default async function SporcularSayfasi() {
         altBaslik={`${sporcular.length} kayıt`}
         geri="/yonetim"
         sag={
-          <Link
-            href="/yonetim/sporcular/yeni"
-            className="rounded-full bg-yuzey px-3 py-1.5 text-xs font-bold text-yesil-700"
-          >
-            + Yeni
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/yonetim/sporcular/ice-aktar"
+              className="flex h-10 items-center rounded-full bg-white/12 px-3 text-xs font-bold text-white"
+            >
+              Excel&apos;den aktar
+            </Link>
+            <Link
+              href="/yonetim/sporcular/yeni"
+              className="flex h-10 items-center rounded-full bg-yuzey px-3 text-xs font-bold text-yesil-700"
+            >
+              + Yeni
+            </Link>
+          </div>
         }
       />
 

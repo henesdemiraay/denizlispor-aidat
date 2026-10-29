@@ -23,6 +23,8 @@ import {
   type SporcuNotu,
 } from "@/lib/types";
 import { KULUP } from "@/kulup";
+import { ZIMMET_DURUMU, zimmetDurumu, zimmetSirala, type Zimmet } from "@/lib/zimmet";
+import { bugunTR } from "@/lib/sezon";
 
 export const dynamic = "force-dynamic";
 
@@ -91,6 +93,14 @@ export default async function SporcuDetay({
       .order("tarih", { ascending: false })
       .limit(20),
   ]);
+  // Zimmet (göç 20261103 yoksa boş kalır); yalnızca iade edilmemiş eşyalar
+  const { data: zimmetData } = await supabase
+    .from("spor_zimmetler")
+    .select("*")
+    .eq("sporcu_id", id)
+    .is("iade_edildi", null);
+  const zimmetler = (zimmetData ?? []) as Zimmet[];
+  const bugunZ = bugunTR();
 
   const aidatlar = (aidatData ?? []) as Aidat[];
   const odemeler = (odemeData ?? []) as Odeme[];
@@ -250,6 +260,30 @@ export default async function SporcuDetay({
           </Link>
         ) : null}
         </>
+        ) : null}
+
+        {zimmetler.length ? (
+          <>
+            <h2 className="mb-2 mt-7 px-1 bolum-basligi">Kulübün eşyaları</h2>
+            <ul className="kart divide-y divide-neutral-100">
+              {zimmetSirala(zimmetler, bugunZ).map((z) => {
+                const d = zimmetDurumu(z, bugunZ);
+                return (
+                  <li key={z.id} className="flex items-center gap-3 px-4 py-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-neutral-900">
+                        {z.adet > 1 ? `${z.adet} × ` : ""}{z.esya}{z.beden ? ` · ${z.beden}` : ""}
+                      </p>
+                      <p className="text-xs text-neutral-500">
+                        {z.iade_beklenen ? `İade: ${gunAdi(z.iade_beklenen)}` : "Sezon boyunca sizde"}
+                      </p>
+                    </div>
+                    <span className={`rozet shrink-0 ${ZIMMET_DURUMU[d].sinif}`}>{ZIMMET_DURUMU[d].ad}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
         ) : null}
 
         <h2 className="mb-2 mt-7 px-1 bolum-basligi">

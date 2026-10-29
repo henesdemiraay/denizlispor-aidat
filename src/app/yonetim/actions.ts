@@ -458,3 +458,115 @@ export async function adayKapat(formData: FormData) {
   bildir("/yonetim/on-kayit", "Başvuru kapatıldı");
 }
 
+
+/** Excel / CSV'den toplu sporcu aktarımı. Dönen metin ekranda gösterilir. */
+export async function sporcularIceAktar(veri: string, durum: string): Promise<string> {
+  const supabase = await createClient();
+  let liste: Record<string, unknown>[];
+  try {
+    liste = JSON.parse(veri);
+    if (!Array.isArray(liste)) throw new Error();
+  } catch {
+    return "Liste okunamadı.";
+  }
+  if (liste.length === 0) return "Aktarılacak kayıt yok.";
+  if (liste.length > 1000) return "Tek seferde en fazla 1000 sporcu aktarılabilir.";
+
+  const kirp = (v: unknown, n: number) => {
+    const s = String(v ?? "").trim();
+    return s ? s.slice(0, n) : null;
+  };
+  const temiz = liste
+    .map((k) => ({
+      ad: kirp(k.ad, 60),
+      soyad: kirp(k.soyad, 60),
+      dogum_tarihi: /^\d{4}-\d{2}-\d{2}$/.test(String(k.dogum_tarihi ?? "")) ? String(k.dogum_tarihi) : null,
+      yas_grubu: kirp(k.yas_grubu, 20),
+      mevki: kirp(k.mevki, 40),
+      forma_no: Number.isInteger(k.forma_no) && Number(k.forma_no) >= 0 && Number(k.forma_no) < 1000 ? Number(k.forma_no) : null,
+      okul: kirp(k.okul, 120),
+      veli_ad_soyad: kirp(k.veli_ad_soyad, 80),
+      veli_telefon: kirp(k.veli_telefon, 30),
+      veli_eposta: kirp(k.veli_eposta, 120)?.toLowerCase() ?? null,
+      aylik_aidat: Math.max(0, Math.min(100000, Number(k.aylik_aidat) || 0)),
+      notlar: kirp(k.notlar, 500),
+      durum: durum === "pasif" ? "pasif" : "aktif",
+    }))
+    .filter((k) => k.ad && k.soyad);
+
+  // Tekrarları atla: aynı ad + soyad + doğum tarihi
+  const { data: mevcut, error: okumaHatasi } = await supabase.from("spor_sporcular").select("ad, soyad, dogum_tarihi");
+  if (okumaHatasi) return `Kayıtlar okunamadı: ${okumaHatasi.message}`;
+  const anahtar = (k: { ad: unknown; soyad: unknown; dogum_tarihi: unknown }) =>
+    `${String(k.ad).toLocaleLowerCase("tr-TR")}|${String(k.soyad).toLocaleLowerCase("tr-TR")}|${k.dogum_tarihi ?? ""}`;
+  const var_ = new Set((mevcut ?? []).map(anahtar));
+  const yeni: typeof temiz = [];
+  for (const k of temiz) {
+    const a = anahtar(k);
+    if (var_.has(a)) continue;
+    var_.add(a);
+    yeni.push(k);
+  }
+  const atlanan = temiz.length - yeni.length;
+
+  for (let i = 0; i < yeni.length; i += 200) {
+    const { error } = await supabase.from("spor_sporcular").insert(yeni.slice(i, i + 200));
+    if (error) return `${i} kayıt aktarıldı, sonra hata: ${error.message}`;
+  }
+  revalidatePath("/yonetim/sporcular");
+  revalidatePath("/yonetim");
+  return `✓ ${yeni.length} sporcu aktarıldı${atlanan ? `, ${atlanan} kayıt zaten vardı (atlandı)` : ""}.`;
+}
+
+// ------------------------------------------------------------------ zimmet
+function zimmetDonus(v: FormDataEntryValue | null) {
+  const s = String(v ?? "");
+  return s.startsWith("/yonetim/") && !s.startsWith("//") ? s : "/yonetim/zimmet";
+}
+
+export async function zimmetEkle(formData: FormData) {
+  const supabase = await createClient();
+  const donus = zimmetDonus(formData.get("donus"));
+  const adet = Math.round(sayi(formData.get("adet")) || 1);
+  const { error } = await supabase.from("spor_zimmetler").insert({
+    sporcu_id: String(formData.get("sporcu_id")),
+    esya: metin(formData.get("esya")),
+    beden: metin(formData.get("beden")),
+    adet: Math.min(99, Math.max(1, adet)),
+    verilis: metin(formData.get("verilis")) ?? undefined,
+    iade_beklenen: metin(formData.get("iade_beklenen")),
+    notlar: metin(formData.get("notlar")),
+  });
+  if (error) {
+    if (/check constraint/i.test(error.message)) uyar(donus, "Tarihleri kontrol edin: iade tarihi verilişten önce olamaz.");
+    hataIsle(error, donus);
+  }
+  revalidatePath(donus);
+  revalidatePath("/yonetim/zimmet");
+  bildir(donus, "Zimmete eklendi");
+}
+
+export async function zimmetIade(formData: FormData) {
+  const supabase = await createClient();
+  const donus = zimmetDonus(formData.get("donus"));
+  const bugun = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Istanbul" });
+  const { error } = await supabase
+    .from("spor_zimmetler")
+    .update({ iade_edildi: bugun })
+    .eq("id", String(formData.get("id")))
+    .is("iade_edildi", null);
+  hataIsle(error, donus);
+  revalidatePath(donus);
+  revalidatePath("/yonetim/zimmet");
+  bildir(donus, "İade alındı");
+}
+
+export async function zimmetSil(formData: FormData) {
+  const supabase = await createClient();
+  const donus = zimmetDonus(formData.get("donus"));
+  const { error } = await supabase.from("spor_zimmetler").delete().eq("id", String(formData.get("id")));
+  hataIsle(error, donus);
+  revalidatePath(donus);
+  revalidatePath("/yonetim/zimmet");
+  bildir(donus, "Zimmet kaydı silindi");
+}

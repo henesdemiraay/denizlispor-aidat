@@ -38,6 +38,12 @@ const BOLUMLER: { yol: string; ad: string; aciklama: string; ikon: IkonAdi }[] =
     ikon: "artı",
   },
   {
+    yol: "/yonetim/zimmet",
+    ad: "Zimmet",
+    aciklama: "Forma, eşofman, top: kimde ne var, iadesi geciken",
+    ikon: "kalkan",
+  },
+  {
     yol: "/yonetim/sezonlar",
     ad: "Sezonlar ve arşiv",
     aciklama: "Sezonu mühürle, anılar, kulüpten yükselenler",
