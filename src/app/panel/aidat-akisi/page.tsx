@@ -87,7 +87,7 @@ export default async function AidatAkisi({
                       scroll={false}
                       className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
                         aktif
-                          ? "bg-yesil-600 text-white shadow-sm"
+                          ? "bg-yesil-500 text-siyah shadow-sm"
                           : "bg-white text-neutral-600 ring-1 ring-black/5"
                       }`}
                     >
@@ -109,7 +109,7 @@ export default async function AidatAkisi({
 
                 <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-neutral-100">
                   <div
-                    className="h-full rounded-full bg-yesil-600 transition-all"
+                    className="h-full rounded-full bg-yesil-500 transition-all"
                     style={{ width: `${yuzde}%` }}
                   />
                 </div>
@@ -136,7 +136,7 @@ export default async function AidatAkisi({
 
             {gruplar.map(([grup, liste]) => (
               <div key={grup}>
-                <h2 className="mb-2 mt-6 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+                <h2 className="mb-2 mt-6 px-1 bolum-basligi">
                   {grup}
                   <span className="ml-2 font-medium normal-case text-neutral-400">
                     ({liste.length})

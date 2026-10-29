@@ -227,7 +227,7 @@ export default async function SporcuDetay({
           </Link>
         ) : null}
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Gelişim
         </h2>
         <GelisimBolumu
@@ -239,7 +239,7 @@ export default async function SporcuDetay({
 
         {notlar.length > 0 ? (
           <>
-            <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+            <h2 className="mb-2 mt-7 px-1 bolum-basligi">
               Antrenör notları
             </h2>
             <div className="kart divide-y divide-neutral-100">
@@ -257,7 +257,7 @@ export default async function SporcuDetay({
 
         {yoklamaKayitlari.length > 0 ? (
           <>
-            <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+            <h2 className="mb-2 mt-7 px-1 bolum-basligi">
               Devam çizelgesi
             </h2>
             <div className="kart divide-y divide-neutral-100">
@@ -284,7 +284,7 @@ export default async function SporcuDetay({
         ) : null}
 
         <div className="mb-2 mt-7 flex items-center justify-between px-1">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-neutral-500">
+          <h2 className="bolum-basligi">
             Sporcu bilgileri
           </h2>
           <Link
@@ -306,7 +306,7 @@ export default async function SporcuDetay({
 
         {katilimlar.length > 0 ? (
           <>
-            <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+            <h2 className="mb-2 mt-7 px-1 bolum-basligi">
               Maçlar
             </h2>
             <div className="kart divide-y divide-neutral-100">
@@ -338,7 +338,7 @@ export default async function SporcuDetay({
           </>
         ) : null}
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Belgeler
         </h2>
         <div className="kart divide-y divide-neutral-100">
@@ -371,7 +371,7 @@ export default async function SporcuDetay({
           <BelgeYukle sporcuId={sporcu.id} kullaniciId={user.id} />
         </div>
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Aidat dönemleri
         </h2>
         {aidatlar.length === 0 ? (
@@ -399,7 +399,7 @@ export default async function SporcuDetay({
           </div>
         )}
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Ödeme geçmişi
         </h2>
         {odemeler.length === 0 ? (

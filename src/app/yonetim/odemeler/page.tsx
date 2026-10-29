@@ -83,7 +83,7 @@ export default async function OdemelerSayfasi() {
             <form action={odemeKarar}>
               <input type="hidden" name="id" value={o.id} />
               <input type="hidden" name="durum" value="onaylandi" />
-              <button className="rounded-lg bg-yesil-600 px-3 py-1.5 text-xs font-semibold text-white">
+              <button className="rounded-lg bg-yesil-500 px-3 py-1.5 text-xs font-bold text-siyah">
                 Onayla
               </button>
             </form>
@@ -111,7 +111,7 @@ export default async function OdemelerSayfasi() {
       />
 
       <div className="mx-auto w-full max-w-5xl px-4 pb-28">
-        <h2 className="mb-2 mt-4 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-4 px-1 bolum-basligi">
           Onay bekleyenler
         </h2>
         <div className="kart divide-y divide-neutral-100">
@@ -124,7 +124,7 @@ export default async function OdemelerSayfasi() {
           )}
         </div>
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Geçmiş kayıtlar
         </h2>
         <div className="kart divide-y divide-neutral-100">

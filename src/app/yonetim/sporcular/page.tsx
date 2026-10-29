@@ -96,7 +96,7 @@ export default async function SporcularSayfasi() {
                     </div>
                     <KaydetDugmesi
                       bekleyen="Onaylanıyor…"
-                      className="rounded-xl bg-yesil-600 px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                      className="rounded-xl bg-yesil-500 px-4 py-2.5 text-sm font-bold text-siyah disabled:opacity-50"
                     >
                       Onayla ve aktif et
                     </KaydetDugmesi>
@@ -129,7 +129,7 @@ export default async function SporcularSayfasi() {
                 >
                   <div
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white ${
-                      s.durum === "aktif" ? "bg-yesil-600" : "bg-neutral-400"
+                      s.durum === "aktif" ? "bg-yesil-500" : "bg-neutral-400"
                     }`}
                   >
                     {s.ad[0]}

@@ -70,7 +70,7 @@ export default async function AntrenmanDetay({
           ))}
         </div>
 
-        <h2 className="mb-2 mt-6 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-6 px-1 bolum-basligi">
           Yoklama
         </h2>
 
@@ -137,7 +137,7 @@ export default async function AntrenmanDetay({
           </form>
         )}
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Antrenman içeriği
         </h2>
         <form action={antrenmanKaydet} className="kart space-y-4 px-4 py-5">

@@ -2,7 +2,7 @@
    Tek seri kullanılır (çift eksen yok), ince işaretler, geri planda ızgara,
    seçici etiket; her işaretin üstüne gelince <title> ile değer görünür. */
 
-const YESIL = "#046a38";
+const YESIL = "#00A650";
 const YESIL_ACIK = "rgba(4,106,56,0.12)";
 const IZGARA = "#e6e9e8";
 const YAZI = "#8b918e";
@@ -197,7 +197,7 @@ export function YatayBarGrafik({
           <span className="w-24 shrink-0 text-xs font-medium text-neutral-600">{v.etiket}</span>
           <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-neutral-100">
             <div
-              className="h-full rounded-full bg-yesil-600"
+              className="h-full rounded-full bg-yesil-500"
               style={{ width: `${Math.round((v.deger / enCok) * 100)}%` }}
               title={`${v.etiket}: ${v.deger}/${enCok}`}
             />
@@ -246,7 +246,7 @@ export function HalkaGrafik({
           textAnchor="middle"
           fontSize="24"
           fontWeight="800"
-          fill="#1a1a1a"
+          fill="#231F20"
         >
           %{Math.round(yuzde)}
         </text>

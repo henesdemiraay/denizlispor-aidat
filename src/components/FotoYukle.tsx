@@ -61,7 +61,7 @@ export default function FotoYukle({
             className="h-24 w-24 rounded-full object-cover ring-4 ring-white/70"
           />
         ) : (
-          <span className="flex h-24 w-24 items-center justify-center rounded-full bg-yesil-600 text-2xl font-bold text-white ring-4 ring-white/70">
+          <span className="flex h-24 w-24 items-center justify-center rounded-full bg-yesil-500 text-2xl font-bold text-siyah ring-4 ring-white/70">
             {basHarfler}
           </span>
         )}

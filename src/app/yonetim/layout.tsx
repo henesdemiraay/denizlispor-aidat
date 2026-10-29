@@ -1,4 +1,5 @@
 import AltMenu, { type MenuOgesi } from "@/components/AltMenu";
+import SurumNotlari from "@/components/SurumNotlari";
 import { yoneticiGerekli } from "@/lib/yetki";
 
 const MENU: MenuOgesi[] = [
@@ -10,11 +11,12 @@ const MENU: MenuOgesi[] = [
 ];
 
 export default async function YonetimLayout({ children }: { children: React.ReactNode }) {
-  await yoneticiGerekli();
+  const { rol } = await yoneticiGerekli();
   return (
-    <div className="min-h-dvh bg-[#f4f6f5]">
+    <div className="min-h-dvh bg-zemin">
       {children}
       <AltMenu ogeler={MENU} />
+      <SurumNotlari rol={rol} />
     </div>
   );
 }

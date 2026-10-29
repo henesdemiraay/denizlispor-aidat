@@ -109,7 +109,7 @@ export default async function AntrenorAnaSayfa() {
         </div>
 
         <div className="mb-2 mt-7 flex items-center justify-between px-1">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-neutral-500">
+          <h2 className="bolum-basligi">
             Son antrenmanlar
           </h2>
           <Link href="/antrenor/antrenmanlar" className="text-sm font-semibold text-yesil-700">

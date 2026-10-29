@@ -1,4 +1,5 @@
 import AltMenu, { type MenuOgesi } from "@/components/AltMenu";
+import SurumNotlari from "@/components/SurumNotlari";
 import { personelGerekli } from "@/lib/yetki";
 
 const MENU: MenuOgesi[] = [
@@ -9,11 +10,12 @@ const MENU: MenuOgesi[] = [
 ];
 
 export default async function AntrenorLayout({ children }: { children: React.ReactNode }) {
-  await personelGerekli();
+  const { rol } = await personelGerekli();
   return (
-    <div className="min-h-dvh bg-[#f4f6f5]">
+    <div className="min-h-dvh bg-zemin">
       {children}
       <AltMenu ogeler={MENU} />
+      <SurumNotlari rol={rol} />
     </div>
   );
 }

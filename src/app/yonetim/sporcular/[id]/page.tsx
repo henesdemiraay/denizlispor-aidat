@@ -79,7 +79,7 @@ export default async function SporcuDuzenle({
 
         <SporcuForm sporcu={sporcu} />
 
-        <h2 className="mb-2 mt-8 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-8 px-1 bolum-basligi">
           Belgeler ({belgeler.length})
         </h2>
         {belgeler.length === 0 ? (
@@ -117,7 +117,7 @@ export default async function SporcuDuzenle({
           </div>
         )}
 
-        <h2 className="mb-2 mt-8 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-8 px-1 bolum-basligi">
           Aidat dönemleri ({aidatlar.length})
         </h2>
         {aidatlar.length === 0 ? (
@@ -138,7 +138,7 @@ export default async function SporcuDuzenle({
           </div>
         )}
 
-        <h2 className="mb-2 mt-8 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-8 px-1 bolum-basligi">
           Ödemeler ({odemeler.length})
         </h2>
         {odemeler.length === 0 ? (

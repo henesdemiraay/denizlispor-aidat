@@ -41,7 +41,7 @@ export default async function AntrenorSporcular() {
         ) : (
           sirali.map(([grup, liste]) => (
             <section key={grup} className="mt-6 first:mt-4">
-              <h2 className="mb-2 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+              <h2 className="mb-2 px-1 bolum-basligi">
                 {grup}
                 <span className="ml-2 font-medium normal-case text-neutral-400">
                   ({liste.length})
@@ -65,7 +65,7 @@ export default async function AntrenorSporcular() {
                       href={`/antrenor/sporcular/${s.id}`}
                       className="flex items-center gap-3 px-4 py-3.5"
                     >
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-yesil-500 to-yesil-700 text-sm font-bold text-white">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-yesil-500 font-manset text-lg font-extrabold text-siyah">
                         {s.ad[0]}
                         {s.soyad[0]}
                       </span>

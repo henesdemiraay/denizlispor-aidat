@@ -91,7 +91,7 @@ export default async function AyarlarSayfasi() {
           <KaydetDugmesi>Ayarları kaydet</KaydetDugmesi>
         </form>
 
-        <h2 className="mb-2 mt-8 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-8 px-1 bolum-basligi">
           Bekleyen yetki talepleri
         </h2>
         {talepler.length === 0 ? (
@@ -121,7 +121,7 @@ export default async function AyarlarSayfasi() {
                     <input type="hidden" name="kullanici_id" value={t.kullanici_id} />
                     <input type="hidden" name="talep_rol" value={t.talep_rol} />
                     <input type="hidden" name="karar" value="onayla" />
-                    <button className="rounded-lg bg-yesil-600 px-3 py-1.5 text-xs font-semibold text-white">
+                    <button className="rounded-lg bg-yesil-500 px-3 py-1.5 text-xs font-bold text-siyah">
                       Onayla
                     </button>
                   </form>
@@ -140,7 +140,7 @@ export default async function AyarlarSayfasi() {
           </div>
         )}
 
-        <h2 className="mb-2 mt-8 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-8 px-1 bolum-basligi">
           Kullanıcılar ve yetkiler
         </h2>
         <div className="kart mb-3 px-4 py-3.5">

@@ -31,6 +31,13 @@ export default async function Hesap() {
     },
   ];
 
+  baglantilar.push({
+    yol: "/yenilikler",
+    ad: "Yenilikler",
+    aciklama: "Uygulamadaki son güncellemeler",
+    ikon: "belge",
+  });
+
   if (rol === "yonetici") {
     baglantilar.push({
       yol: "/yonetim",
@@ -54,7 +61,7 @@ export default async function Hesap() {
 
       <div className="mx-auto w-full max-w-3xl px-4 pb-28">
         <div className="kart -mt-3 flex items-center gap-4 px-4 py-5">
-          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yesil-500 to-yesil-700 text-lg font-bold text-white">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-yesil-500 font-manset text-2xl font-extrabold text-siyah">
             {(profil?.ad_soyad ?? user.email ?? "?").slice(0, 1).toUpperCase()}
           </span>
           <div className="min-w-0">

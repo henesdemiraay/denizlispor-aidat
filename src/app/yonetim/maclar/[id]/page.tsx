@@ -103,7 +103,7 @@ export default async function MacDetay({
           </div>
         </form>
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Kadro ve oynanan süre
         </h2>
 
@@ -147,7 +147,7 @@ export default async function MacDetay({
                     <div className="flex justify-center">
                       <input name={`ilk11_${s.id}`} type="checkbox"
                         defaultChecked={k?.ilk_onbir ?? false}
-                        className="h-5 w-5 rounded border-neutral-300 accent-yesil-600" />
+                        className="h-5 w-5 rounded border-neutral-300 accent-yesil-500" />
                     </div>
                     <label className="text-xs text-neutral-500 sm:sr-only">Gol</label>
                     <input name={`gol_${s.id}`} type="number" min="0"

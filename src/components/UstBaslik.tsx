@@ -17,14 +17,14 @@ export default function UstBaslik({
   children?: React.ReactNode;
 }) {
   return (
-    <header className="relative overflow-hidden rounded-b-[28px] bg-gradient-to-br from-yesil-600 via-yesil-700 to-neutral-900 px-4 pb-6 pt-[max(0.9rem,env(safe-area-inset-top))] text-white shadow-lg shadow-yesil-900/15">
+    <header className="relative overflow-hidden rounded-b-[28px] bg-siyah px-4 pb-6 pt-[max(0.9rem,env(safe-area-inset-top))] text-white shadow-lg shadow-black/20">
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-16 -top-20 h-52 w-52 rounded-full bg-white/[0.07]"
+        className="pointer-events-none absolute -right-16 -top-20 h-52 w-52 rounded-full border border-yesil-500/25"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-10 top-12 h-32 w-32 rounded-full bg-white/[0.05]"
+        className="pointer-events-none absolute -right-2 -top-6 h-24 w-24 rounded-full border border-yesil-500/20"
       />
 
       <div className={`relative mx-auto flex w-full items-center gap-3 ${genis ? "max-w-5xl" : "max-w-3xl"}`}>
@@ -41,9 +41,9 @@ export default function UstBaslik({
           />
         )}
         <div className="min-w-0 flex-1">
-          <h1 className="truncate text-[17px] font-bold leading-tight tracking-tight">{baslik}</h1>
+          <h1 className="manset truncate text-[26px]">{baslik}</h1>
           {altBaslik ? (
-            <p className="truncate text-xs font-medium text-white/60">{altBaslik}</p>
+            <p className="mt-1 truncate font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-yesil-500">{altBaslik}</p>
           ) : null}
         </div>
         {sag}

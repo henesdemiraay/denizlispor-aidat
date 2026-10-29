@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --yesil: #046a38;
-  --yesil-koyu: #024124;
-  --siyah: #1a1a1a;
-  --zemin: #f4f6f5;
+  /* Yazı stili: tüm kulüplerde ortak (ürünün imzası) */
+  --font-sans: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-manset: "Big Shoulders Display", "Barlow", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* Marka renkleri (kulübe göre değişir) */
+  --yesil: #00a650;
+  --yesil-koyu: #00632f;
+  --siyah: #231f20;
+  --zemin: #f4f3f3;
 }
 
 html {
@@ -17,7 +21,7 @@ html {
 html,
 body {
   font-family: var(--font-sans);
-  letter-spacing: -0.006em;
+  letter-spacing: 0;
   background: var(--zemin);
   color: var(--siyah);
   -webkit-tap-highlight-color: transparent;
@@ -29,7 +33,7 @@ body {
 h1,
 h2,
 h3 {
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 /* iOS'ta girişlerde otomatik yakınlaştırmayı önlemek için 16px taban */
@@ -51,19 +55,27 @@ summary::-webkit-details-marker {
     @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition active:scale-[.98] disabled:opacity-50 disabled:active:scale-100;
   }
   .btn-birincil {
-    @apply btn bg-yesil-600 text-white shadow-sm shadow-yesil-900/20 hover:bg-yesil-700;
+    @apply btn bg-yesil-500 font-bold text-siyah shadow-sm shadow-yesil-900/20 hover:bg-yesil-400;
   }
   .btn-ikincil {
-    @apply btn bg-white text-yesil-700 ring-1 ring-yesil-600/20 hover:bg-yesil-50;
+    @apply btn bg-white text-siyah ring-1 ring-siyah/15 hover:bg-neutral-50;
   }
   .btn-koyu {
-    @apply btn bg-neutral-900 text-white hover:bg-neutral-800;
+    @apply btn bg-siyah text-white hover:bg-neutral-800;
   }
   .alan {
-    @apply w-full rounded-xl border border-neutral-300 bg-white px-3.5 py-3 text-[16px] outline-none transition placeholder:text-neutral-400 focus:border-yesil-600 focus:ring-2 focus:ring-yesil-600/20;
+    @apply w-full rounded-xl border border-neutral-300 bg-white px-3.5 py-3 text-[16px] outline-none transition placeholder:text-neutral-400 focus:border-yesil-500 focus:ring-2 focus:ring-yesil-500/25;
   }
   .etiket {
     @apply mb-1.5 block text-sm font-medium text-neutral-700;
+  }
+  /* Bölüm üst başlığı: arşiv etiketi */
+  .bolum-basligi {
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500;
+  }
+  /* Manşet: stadyum tabelası */
+  .manset {
+    @apply font-manset font-extrabold uppercase leading-[0.95] tracking-[0.01em];
   }
   .rozet {
     @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold leading-none;

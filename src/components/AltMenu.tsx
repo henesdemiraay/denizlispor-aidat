@@ -33,14 +33,14 @@ export default function AltMenu({ ogeler }: { ogeler: MenuOgesi[] }) {
             >
               <span
                 className={`flex h-8 w-14 items-center justify-center rounded-full transition ${
-                  aktif ? "bg-yesil-600/10 text-yesil-700" : "text-neutral-400"
+                  aktif ? "bg-yesil-500/15 text-siyah" : "text-neutral-400"
                 }`}
               >
                 <Ikon ad={o.ikon} className="h-[22px] w-[22px]" />
               </span>
               <span
-                className={`text-[10.5px] font-semibold leading-none tracking-tight ${
-                  aktif ? "text-yesil-700" : "text-neutral-500"
+                className={`text-[11px] font-semibold leading-none ${
+                  aktif ? "font-bold text-siyah" : "text-neutral-500"
                 }`}
               >
                 {o.ad}

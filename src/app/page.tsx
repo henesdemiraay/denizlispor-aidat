@@ -45,11 +45,11 @@ export default function AcilisEkrani() {
   return (
     <main
       onClick={() => router.replace("/git")}
-      className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-yesil-700 via-yesil-800 to-neutral-900 px-6 text-center"
+      className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-siyah px-6 text-center"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl"
+        className="pointer-events-none absolute -top-24 h-72 w-72 rounded-full bg-yesil-500/25 blur-3xl"
       />
       <div className="arma-giris relative">
         <Image
@@ -63,15 +63,15 @@ export default function AcilisEkrani() {
       </div>
 
       <div className="yazi-giris mt-8">
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">DENİZLİSPOR</h1>
-        <p className="mt-1.5 text-sm font-medium tracking-[0.2em] text-white/70">SPORCU TAKİP</p>
+        <h1 className="manset text-5xl text-white">DENİZLİSPOR</h1>
+        <p className="mt-2 font-mono text-xs font-medium tracking-[0.2em] text-yesil-500">ALTYAPI · SPORCU TAKİP</p>
       </div>
 
       <div className="yazi-giris absolute bottom-10 flex flex-col items-center gap-3">
         <div className="h-1 w-24 overflow-hidden rounded-full bg-white/20">
-          <div className="h-full w-1/3 animate-[yaziGiris_1.4s_ease-in-out_infinite_alternate] rounded-full bg-white/80" />
+          <div className="h-full w-1/3 animate-[yaziGiris_1.4s_ease-in-out_infinite_alternate] rounded-full bg-yesil-500" />
         </div>
-        <p className="text-[11px] text-white/50">1966</p>
+        <p className="font-mono text-[11px] tracking-[0.2em] text-white/50">1966</p>
       </div>
     </main>
   );

@@ -99,7 +99,7 @@ export default async function AntrenorSporcuDetay({
           />
         </div>
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Antrenör notları
         </h2>
 
@@ -157,7 +157,7 @@ export default async function AntrenorSporcuDetay({
           </div>
         ) : null}
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Dönem değerlendirmesi
         </h2>
         <form action={degerlendirmeKaydet} className="kart space-y-4 px-4 py-5">
@@ -200,7 +200,7 @@ export default async function AntrenorSporcuDetay({
           </p>
         </form>
 
-        <h2 className="mb-2 mt-7 px-1 text-sm font-bold uppercase tracking-wide text-neutral-500">
+        <h2 className="mb-2 mt-7 px-1 bolum-basligi">
           Fiziksel ölçüm
         </h2>
         <form action={olcumKaydet} className="kart space-y-4 px-4 py-5">

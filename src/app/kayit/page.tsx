@@ -94,7 +94,7 @@ export default function KayitSayfasi() {
                 <input
                   type="radio"
                   name="rol"
-                  className="mt-1 h-4 w-4 accent-[#046a38]"
+                  className="mt-1 h-4 w-4 accent-yesil-500"
                   checked={rol === r.deger}
                   onChange={() => setRol(r.deger)}
                 />

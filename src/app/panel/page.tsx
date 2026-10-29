@@ -87,9 +87,9 @@ export default async function VeliPaneli() {
             { ad: "Devam", deger: genelDevam === null ? "—" : `%${genelDevam}` },
             { ad: "Bu hafta", deger: `${buHaftaki.length} antr.` },
           ].map((k) => (
-            <div key={k.ad} className="rounded-2xl bg-white/[0.14] px-3 py-3 ring-1 ring-white/10">
-              <p className="text-xl font-extrabold leading-none">{k.deger}</p>
-              <p className="mt-1 text-[11px] text-white/60">{k.ad}</p>
+            <div key={k.ad} className="rounded-2xl bg-white/[0.07] px-3 py-3 ring-1 ring-white/10">
+              <p className="font-manset text-[30px] font-extrabold leading-none">{k.deger}</p>
+              <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-white/60">{k.ad}</p>
             </div>
           ))}
         </div>
@@ -101,7 +101,7 @@ export default async function VeliPaneli() {
             href={anaEkranYolu(rol)}
             className="mt-4 flex items-center gap-3 rounded-2xl bg-neutral-900 px-4 py-3.5 text-white active:scale-[.99]"
           >
-            <Ikon ad="kalkan" className="h-5 w-5 text-yesil-300" />
+            <Ikon ad="kalkan" className="h-5 w-5 text-yesil-500" />
             <div className="flex-1">
               <p className="text-sm font-semibold">
                 {yoneticiMi(rol) ? "Kulüp yönetimi" : "Antrenör paneli"}
@@ -142,7 +142,7 @@ export default async function VeliPaneli() {
         ) : null}
 
         <div className="mb-2 mt-6 flex items-center justify-between px-1">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-neutral-500">
+          <h2 className="bolum-basligi">
             {sporcuHesabi ? "Kaydım" : "Sporcularım"}
           </h2>
           {!sporcuHesabi ? (
@@ -198,7 +198,7 @@ export default async function VeliPaneli() {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={foto} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
                     ) : (
-                      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-yesil-500 to-yesil-700 text-lg font-bold text-white">
+                      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-yesil-500 font-manset text-2xl font-extrabold text-siyah">
                         {s.ad[0]}
                         {s.soyad[0]}
                       </span>
@@ -265,7 +265,7 @@ export default async function VeliPaneli() {
         ) : null}
 
         <div className="mb-2 mt-7 flex items-center justify-between px-1">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-neutral-500">
+          <h2 className="bolum-basligi">
             Bu hafta antrenman
           </h2>
           <Link href="/panel/antrenman" className="text-sm font-semibold text-yesil-700">

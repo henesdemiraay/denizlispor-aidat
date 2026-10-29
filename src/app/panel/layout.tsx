@@ -1,4 +1,6 @@
 import AltMenu, { type MenuOgesi } from "@/components/AltMenu";
+import SurumNotlari from "@/components/SurumNotlari";
+import { oturum } from "@/lib/yetki";
 
 const MENU: MenuOgesi[] = [
   { yol: "/panel", ad: "Ana sayfa", ikon: "ev" },
@@ -7,11 +9,13 @@ const MENU: MenuOgesi[] = [
   { yol: "/panel/hesap", ad: "Hesabım", ikon: "kisiler" },
 ];
 
-export default function PanelLayout({ children }: { children: React.ReactNode }) {
+export default async function PanelLayout({ children }: { children: React.ReactNode }) {
+  const { rol } = await oturum();
   return (
-    <div className="min-h-dvh bg-[#f4f6f5]">
+    <div className="min-h-dvh bg-zemin">
       {children}
       <AltMenu ogeler={MENU} />
+      <SurumNotlari rol={rol} />
     </div>
   );
 }

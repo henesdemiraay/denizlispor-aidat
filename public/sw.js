@@ -1,6 +1,6 @@
 // Minimal service worker — uygulamanın telefona kurulabilmesi için gerekli.
 // Veriler her zaman ağdan taze çekilir; yalnızca çevrimdışıyken kabuk gösterilir.
-const CACHE = "denizlispor-v1";
+const CACHE = "denizlispor-v2";
 const KABUK = ["/", "/icons/icon-512.png", "/manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
