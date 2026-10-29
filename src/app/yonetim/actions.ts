@@ -104,9 +104,11 @@ export async function sporcuDurumGuncelle(formData: FormData) {
   if (error) throw new Error(error.message);
 
   revalidatePath("/yonetim/sporcular");
+  revalidatePath("/yonetim/on-kayit");
   revalidatePath("/yonetim");
+  const donus = String(formData.get("donus") ?? "") === "/yonetim/on-kayit" ? "/yonetim/on-kayit" : "/yonetim/sporcular";
   bildir(
-    "/yonetim/sporcular",
+    donus,
     durum === "aktif" ? "Sporcu onaylandı ve aktif edildi" : "Sporcu durumu güncellendi",
   );
 }
@@ -426,3 +428,33 @@ export async function rolTalebiKarar(formData: FormData) {
     onay ? `${ROL_ADI[talepRol] ?? talepRol} yetkisi verildi` : "Talep reddedildi",
   );
 }
+
+export async function denemeDersiPlanla(formData: FormData) {
+  const supabase = await createClient();
+  const tarih = String(formData.get("tarih") ?? "");
+  const saat = String(formData.get("saat") ?? "") || "17:00";
+  if (!tarih) uyar("/yonetim/on-kayit", "Deneme dersinin tarihini seçin.");
+  const { error } = await supabase.rpc("spor_deneme_dersi_planla", {
+    p_sporcu: String(formData.get("id")),
+    // Türkiye saati (UTC+3, yaz saati yok)
+    p_zaman: `${tarih}T${saat}:00+03:00`,
+    p_yer: metin(formData.get("yer")),
+    p_not: metin(formData.get("not")),
+  });
+  if (error) uyar("/yonetim/on-kayit", error.message);
+  revalidatePath("/yonetim/on-kayit");
+  bildir("/yonetim/on-kayit", "Deneme dersi planlandı, veliye bildirildi");
+}
+
+export async function adayKapat(formData: FormData) {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("spor_aday_kapat", {
+    p_sporcu: String(formData.get("id")),
+    p_neden: String(formData.get("neden") ?? ""),
+  });
+  if (error) uyar("/yonetim/on-kayit", error.message);
+  revalidatePath("/yonetim/on-kayit");
+  revalidatePath("/yonetim/sporcular");
+  bildir("/yonetim/on-kayit", "Başvuru kapatıldı");
+}
+

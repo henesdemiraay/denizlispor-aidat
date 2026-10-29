@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from "./config";
+import { guvenliYol } from "@/lib/yonlendirme";
 
 const KORUMASIZ = ["/giris", "/kayit", "/sifremi-unuttum", "/sifre-yenile"];
 
@@ -48,8 +49,11 @@ export async function updateSession(request: NextRequest) {
 
   if (user && korumasiz) {
     const url = request.nextUrl.clone();
+    const devam = request.nextUrl.searchParams.get("devam");
     url.pathname = "/git";
     url.search = "";
+    // Ön kayıt gibi bağlantılarda girişli kişi gideceği yere götürülür
+    if (devam && guvenliYol(devam, "") !== "") url.searchParams.set("devam", guvenliYol(devam));
     return NextResponse.redirect(url);
   }
 

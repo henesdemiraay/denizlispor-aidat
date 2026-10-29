@@ -53,6 +53,11 @@ export default async function SporcularSayfasi() {
             <h2 className="mb-2 mt-4 px-1 text-sm font-bold uppercase tracking-wide text-amber-700">
               Veli kaydı — onay bekleyen ({bekleyenler.length})
             </h2>
+            <p className="-mt-1 mb-2 px-1 text-xs text-neutral-500">
+              Deneme dersi planlamak için{" "}
+              <Link href="/yonetim/on-kayit" className="font-semibold text-yesil-700">Ön kayıt ve adaylar</Link>{" "}
+              ekranını kullanın.
+            </p>
             <div className="divide-y divide-amber-500/15 rounded-2xl bg-amber-50/70 ring-1 ring-amber-500/20">
               {bekleyenler.map((s) => (
                 <div key={s.id} className="px-4 py-4">

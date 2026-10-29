@@ -18,6 +18,7 @@ const IKON: Record<string, IkonAdi> = {
   kayit_onaylandi: "kisiler",
   yeni_odeme: "kontrol",
   yeni_kayit: "kisiler",
+  deneme_dersi: "takvim",
 };
 
 function zaman(z: string) {

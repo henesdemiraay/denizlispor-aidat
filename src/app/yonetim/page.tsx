@@ -111,7 +111,7 @@ export default async function YonetimOzet() {
   const tumIsler: Is[] = [
     { sayi: odemeOnayi, baslik: "ödeme bildirimi onay bekliyor", aciklama: "Dekontu inceleyip onaylayın", yol: "/yonetim/odemeler", ikon: "kontrol", acil: true },
     { sayi: eksikTahakkuk, baslik: `sporcunun ${donemAdi(donem)} borcu oluşmamış`, aciklama: "Eksik tahakkukları tek dokunuşla tamamlayın", yol: "/yonetim/aidatlar", ikon: "cuzdan", acil: true },
-    { sayi: onayBekleyenSporcu, baslik: "yeni sporcu kaydı onay bekliyor", aciklama: "Velinin açtığı kaydı inceleyin", yol: "/yonetim/sporcular", ikon: "kisiler" },
+    { sayi: onayBekleyenSporcu, baslik: "yeni sporcu kaydı onay bekliyor", aciklama: "Deneme dersi planlayın ya da kesin kayda alın", yol: "/yonetim/on-kayit", ikon: "kisiler" },
     { sayi: (talepData ?? []).length, baslik: "yetki talebi bekliyor", aciklama: "Antrenör / yönetim başvurusu", yol: "/yonetim/ayarlar", ikon: "kalkan" },
     { sayi: gecikmisSporcu, baslik: "sporcunun gecikmiş aidatı var", aciklama: "Son ödeme tarihi geçmiş", yol: "/yonetim/aidatlar", ikon: "zil" },
     { sayi: yoklamasiz.length, baslik: "antrenmanın yoklaması alınmamış", aciklama: "Son 14 gün", yol: yoklamasiz[0] ? `/antrenor/antrenmanlar/${yoklamasiz[0].id}` : "/antrenor/antrenmanlar", ikon: "takvim" },

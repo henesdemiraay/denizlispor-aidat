@@ -1,5 +1,6 @@
 "use client";
 
+import { guvenliYol } from "@/lib/yonlendirme";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -37,7 +38,7 @@ function Form() {
       return;
     }
     const devam = params.get("devam");
-    router.replace(devam && devam.startsWith("/") ? devam : "/git");
+    router.replace(guvenliYol(devam));
     router.refresh();
   }
 

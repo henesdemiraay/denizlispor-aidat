@@ -32,6 +32,12 @@ const BOLUMLER: { yol: string; ad: string; aciklama: string; ikon: IkonAdi }[] =
     ikon: "grafik",
   },
   {
+    yol: "/yonetim/on-kayit",
+    ad: "Ön kayıt ve adaylar",
+    aciklama: "Başvuru QR'ı ve afişi, deneme dersi, kesin kayıt",
+    ikon: "artı",
+  },
+  {
     yol: "/yonetim/sezonlar",
     ad: "Sezonlar ve arşiv",
     aciklama: "Sezonu mühürle, anılar, kulüpten yükselenler",

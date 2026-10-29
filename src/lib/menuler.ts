@@ -84,6 +84,7 @@ export const YONETIM_MENUSU: Menu = {
         { yol: "/yonetim", ad: "Özet", ikon: "ev" },
         { yol: "/yonetim/bildirimler", ad: "Bildirimler", ikon: "zil" },
         { yol: "/yonetim/sporcular", ad: "Sporcular", ikon: "kisiler" },
+        { yol: "/yonetim/on-kayit", ad: "Ön kayıt ve adaylar", ikon: "artı" },
       ],
     },
     {

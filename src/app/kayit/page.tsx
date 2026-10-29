@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { guvenliYol } from "@/lib/yonlendirme";
 import AuthKabuk from "@/components/AuthKabuk";
 import Uyari from "@/components/Uyari";
 import { createClient } from "@/lib/supabase/client";
@@ -19,6 +20,18 @@ export default function KayitSayfasi() {
   const [hata, setHata] = useState<string | null>(null);
   const [bilgi, setBilgi] = useState<string | null>(null);
   const [bekle, setBekle] = useState(false);
+  // Ön kayıt bağlantısından gelindiyse (/basvuru → /kayit?basvuru=1&devam=…) rol veli olarak sabitlenir
+  const [basvuru, setBasvuru] = useState(false);
+  const [devam, setDevam] = useState<string | null>(null);
+
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get("basvuru") === "1") {
+      setBasvuru(true);
+      setRol("veli");
+    }
+    setDevam(p.get("devam"));
+  }, []);
 
   const secili = KAYIT_ROLLERI.find((r) => r.deger === rol)!;
 
@@ -44,7 +57,9 @@ export default function KayitSayfasi() {
       options: {
         data: { ad_soyad: adSoyad.trim(), telefon: telefon.trim(), talep_rol: rol },
         emailRedirectTo:
-          typeof window !== "undefined" ? `${window.location.origin}/git` : undefined,
+          typeof window !== "undefined"
+            ? `${window.location.origin}/git${devam ? `?devam=${encodeURIComponent(guvenliYol(devam))}` : ""}`
+            : undefined,
       },
     });
 
@@ -59,7 +74,7 @@ export default function KayitSayfasi() {
     }
 
     if (data.session) {
-      router.replace("/git");
+      router.replace(guvenliYol(devam));
       router.refresh();
       return;
     }
@@ -79,7 +94,14 @@ export default function KayitSayfasi() {
         {hata ? <Uyari>{hata}</Uyari> : null}
         {bilgi ? <Uyari tip="basari">{bilgi}</Uyari> : null}
 
-        <div>
+        {basvuru ? (
+          <Uyari tip="bilgi">
+            <b>Altyapıya ön kayıt.</b> Önce kendi veli hesabınızı açın; ardından çocuğunuzun bilgilerini
+            girersiniz. Kulüp sizi deneme dersine çağıracak.
+          </Uyari>
+        ) : null}
+
+        <div className={basvuru ? "hidden" : undefined}>
           <p className="etiket">Kulüpteki rolünüz</p>
           <div className="mt-1 space-y-2">
             {KAYIT_ROLLERI.map((r) => (
@@ -161,12 +183,17 @@ export default function KayitSayfasi() {
         </div>
 
         <button className="btn-birincil w-full" disabled={bekle}>
-          {bekle ? "Oluşturuluyor…" : "Hesabı oluştur"}
+          {bekle ? "Oluşturuluyor…" : basvuru ? "Hesabı oluştur ve devam et" : "Hesabı oluştur"}
         </button>
 
         <p className="pt-1 text-center text-sm text-neutral-500">
           Hesabınız var mı?{" "}
-          <Link href="/giris" className="font-medium text-yesil-700">Giriş yapın</Link>
+          <Link
+            href={devam ? `/giris?devam=${encodeURIComponent(guvenliYol(devam))}` : "/giris"}
+            className="font-medium text-yesil-700"
+          >
+            Giriş yapın
+          </Link>
         </p>
         <p className="text-center text-xs leading-relaxed text-neutral-500">
           Hesap oluşturarak{" "}
