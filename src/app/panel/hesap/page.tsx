@@ -91,6 +91,17 @@ export default async function Hesap() {
           ))}
         </div>
 
+        <Link href="/kvkk/onay" className="kart mt-4 flex items-center gap-3 px-4 py-4">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-yesil-50 text-yesil-700">
+            <Ikon ad="kalkan" className="h-5 w-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-neutral-900">Kişisel veriler ve izinlerim</p>
+            <p className="text-xs text-neutral-500">KVKK aydınlatma metni, açık rıza ve bildirim tercihi</p>
+          </div>
+          <span className="text-neutral-300">›</span>
+        </Link>
+
         <div className="kart mt-4 px-4 py-4">
           <p className="text-sm font-semibold text-neutral-900">Uygulamayı telefona ekleyin</p>
           <p className="mt-1 text-xs leading-relaxed text-neutral-500">

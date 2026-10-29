@@ -7,6 +7,7 @@ import { ANTRENMAN_TURU, haftaBasi } from "@/lib/antrenman";
 import { anaEkranYolu, paraGorebilirMi, personelMi, rolAdi, yoneticiMi } from "@/lib/roller";
 import type { Aidat, Antrenman, Sporcu, Yoklama } from "@/lib/types";
 import { KULUP } from "@/kulup";
+import { duyurulariGetir } from "@/lib/duyuru";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +24,7 @@ export default async function VeliPaneli() {
   const sporcular = (sporcularData ?? []) as Sporcu[];
   const idler = sporcular.map((s) => s.id);
 
-  const [{ data: aidatData }, { data: yoklamaData }, { data: antrenmanData }] = await Promise.all([
+  const [{ data: aidatData }, { data: yoklamaData }, { data: antrenmanData }, duyuruSonuc] = await Promise.all([
     idler.length && paraGorunur
       ? supabase.from("spor_aidatlar").select("*").in("sporcu_id", idler)
       : Promise.resolve({ data: [] as Aidat[] }),
@@ -31,7 +32,17 @@ export default async function VeliPaneli() {
       ? supabase.from("spor_yoklama").select("sporcu_id, durum").in("sporcu_id", idler)
       : Promise.resolve({ data: [] as Yoklama[] }),
     supabase.from("spor_antrenmanlar").select("*").order("tarih", { ascending: false }).limit(8),
+    duyurulariGetir(supabase, {
+      rol,
+      kullaniciId: user.id,
+      yasGruplari: sporcular.map((s) => s.yas_grubu),
+      limit: 10,
+    }),
   ]);
+  const yeniDuyurular = duyuruSonuc
+    ? duyuruSonuc.duyurular.filter((d) => !duyuruSonuc.okunan.has(d.id))
+    : [];
+  const vitrinDuyuru = yeniDuyurular[0] ?? duyuruSonuc?.duyurular.find((d) => d.onemli) ?? null;
 
   const aidatlar = (aidatData ?? []) as Aidat[];
   const yoklamalar = (yoklamaData ?? []) as Pick<Yoklama, "sporcu_id" | "durum">[];
@@ -133,6 +144,30 @@ export default async function VeliPaneli() {
               </p>
             </div>
             <span className="text-white/40">›</span>
+          </Link>
+        ) : null}
+
+        {vitrinDuyuru ? (
+          <Link
+            href="/panel/duyurular"
+            className="kart mt-4 flex items-start gap-3 px-4 py-3.5 ring-1 ring-yesil-500/40 active:scale-[.99]"
+          >
+            <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-yesil-500 text-anametin">
+              <Ikon ad="megafon" className="h-[18px] w-[18px]" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-yesil-500">
+                {yeniDuyurular.length > 1 ? `${yeniDuyurular.length} yeni duyuru` : "Kulüpten duyuru"}
+              </p>
+              <p className="mt-0.5 truncate text-sm font-bold text-neutral-900">{vitrinDuyuru.baslik}</p>
+              <p className="line-clamp-2 text-xs leading-relaxed text-neutral-500">{vitrinDuyuru.icerik}</p>
+            </div>
+            <span className="text-neutral-400">›</span>
+          </Link>
+        ) : duyuruSonuc && duyuruSonuc.duyurular.length ? (
+          <Link href="/panel/duyurular" className="mt-3 flex items-center gap-2 px-1 text-xs font-semibold text-yesil-700">
+            <Ikon ad="megafon" className="h-4 w-4" />
+            Duyurular ({duyuruSonuc.duyurular.length})
           </Link>
         ) : null}
 

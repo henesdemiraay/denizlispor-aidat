@@ -8,6 +8,12 @@ export const dynamic = "force-dynamic";
 
 const BOLUMLER: { yol: string; ad: string; aciklama: string; ikon: IkonAdi }[] = [
   {
+    yol: "/antrenor/duyurular",
+    ad: "Duyurular",
+    aciklama: "Velilere ve sporculara haber, okunma takibi",
+    ikon: "megafon",
+  },
+  {
     yol: "/yonetim/maclar",
     ad: "Maçlar",
     aciklama: "Fikstür, skor ve oynanan süreler",
