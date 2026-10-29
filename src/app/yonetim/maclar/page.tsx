@@ -29,7 +29,7 @@ export default async function MaclarSayfasi() {
 
   return (
     <>
-      <UstBaslik baslik="Maçlar" altBaslik="Fikstür, sonuç ve oynanan süreler" geri="/yonetim" />
+      <UstBaslik genis baslik="Maçlar" altBaslik="Fikstür, sonuç ve oynanan süreler" geri="/yonetim" />
 
       <div className="mx-auto w-full max-w-5xl px-4 pb-28">
         <form action={macKaydet} className="kart mt-3 space-y-3 px-4 py-4">

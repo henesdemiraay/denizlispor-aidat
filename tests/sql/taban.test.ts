@@ -67,4 +67,14 @@ describe("taban şema ve göç zinciri", () => {
     expect(await oturumla(db, veli1, `select sporcu_id from spor_aidatlar`)).toEqual([{ sporcu_id: cocuk1 }]);
     expect(await oturumla(db, yonetici, `select sporcu_id from spor_aidatlar`)).toHaveLength(2);
   });
+
+  it("yetki talebi 'beklemede' durumuyla açılır (Ayarlar ekranı bu değeri arar)", async () => {
+    await db.query(
+      `insert into auth.users (email, raw_user_meta_data) values ('aday@kulup.test', '{"uygulama":"spor","talep_rol":"antrenor"}')`,
+    );
+    const r = await db.query<{ durum: string; talep_rol: string }>(
+      `select durum, talep_rol from spor_rol_talepleri t join spor_profiller p on p.id = t.kullanici_id where p.eposta = 'aday@kulup.test'`,
+    );
+    expect(r.rows).toEqual([{ durum: "beklemede", talep_rol: "antrenor" }]);
+  });
 });

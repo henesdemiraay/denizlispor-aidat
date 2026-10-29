@@ -28,7 +28,8 @@ export default async function AyarlarSayfasi() {
   const { data: talepData } = await supabase
     .from("spor_rol_talepleri")
     .select("id, kullanici_id, talep_rol, created_at")
-    .eq("durum", "bekliyor")
+    // Veritabanı kuralı: beklemede | onaylandi | reddedildi
+    .eq("durum", "beklemede")
     .order("created_at", { ascending: false });
   const talepler = (talepData ?? []) as {
     id: string;

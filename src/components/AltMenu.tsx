@@ -2,30 +2,28 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Ikon, { type IkonAdi } from "@/components/ui/Ikon";
+import Ikon from "@/components/ui/Ikon";
 import { yerDegistirIsaretle } from "@/lib/gezinme";
+import { aktifYol, type MenuOgesi } from "@/lib/menuler";
 
-export type MenuOgesi = { yol: string; ad: string; ikon: IkonAdi; tamEslesme?: boolean };
+export type { MenuOgesi };
 
 export default function AltMenu({ ogeler }: { ogeler: MenuOgesi[] }) {
   const yol = usePathname();
 
-  // En uzun eşleşen yol aktif kabul edilir; böylece /panel/sporcu/x -> "Ana sayfa",
+  // En uzun eşleşen yol aktif kabul edilir; böylece /panel/sporcu/x -> "Bugün",
   // /panel/antrenman -> "Antrenman" olur.
-  const aktifOge = ogeler.reduce<MenuOgesi | null>((enIyi, o) => {
-    const eslesir = yol === o.yol || yol.startsWith(`${o.yol}/`);
-    if (!eslesir) return enIyi;
-    return !enIyi || o.yol.length > enIyi.yol.length ? o : enIyi;
-  }, null);
+  const aktif = aktifYol(yol, ogeler.map((o) => o.yol));
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t print:hidden border-white/10 bg-siyah/95 backdrop-blur-lg">
+    <nav aria-label="Sekmeler"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-siyah/95 backdrop-blur-lg print:hidden lg:hidden">
       <div
         className="mx-auto flex w-full max-w-3xl items-stretch"
         style={{ paddingBottom: "max(0.25rem, env(safe-area-inset-bottom))" }}
       >
         {ogeler.map((o) => {
-          const aktif = aktifOge?.yol === o.yol;
+          const secili = aktif === o.yol;
           return (
             <Link
               key={o.yol}
@@ -33,22 +31,22 @@ export default function AltMenu({ ogeler }: { ogeler: MenuOgesi[] }) {
               // Sekmeler arası geçiş geçmişe yazılmaz (telefon uygulamalarındaki gibi):
               // geri tuşu gezilen sekmeleri tek tek geri sarmaz.
               replace
-              aria-current={aktif ? "page" : undefined}
+              aria-current={secili ? "page" : undefined}
               onClick={() => {
                 if (yol !== o.yol) yerDegistirIsaretle();
               }}
-              className="group relative flex flex-1 flex-col items-center gap-1 px-1 pb-1.5 pt-2.5"
+              className="group relative flex min-h-14 flex-1 flex-col items-center gap-1 px-1 pb-1.5 pt-2.5"
             >
               <span
                 className={`flex h-8 w-14 items-center justify-center rounded-full transition ${
-                  aktif ? "bg-yesil-500/15 text-yesil-500" : "text-neutral-400"
+                  secili ? "bg-yesil-500/15 text-yesil-500" : "text-neutral-400"
                 }`}
               >
                 <Ikon ad={o.ikon} className="h-[22px] w-[22px]" />
               </span>
               <span
                 className={`text-[11px] font-semibold leading-none ${
-                  aktif ? "font-bold text-yesil-500" : "text-neutral-500"
+                  secili ? "font-bold text-yesil-500" : "text-neutral-500"
                 }`}
               >
                 {o.ad}

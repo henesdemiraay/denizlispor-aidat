@@ -67,7 +67,7 @@ export default async function AidatlarSayfasi({
 
   return (
     <>
-      <UstBaslik baslik="Aidatlar" altBaslik="Dönem tahakkuku ve takip" geri="/yonetim" />
+      <UstBaslik genis baslik="Aidatlar" altBaslik="Dönem tahakkuku ve takip" geri="/yonetim" />
 
       <div className="mx-auto w-full max-w-5xl px-4 pb-28">
         {eksikler.length > 0 ? (

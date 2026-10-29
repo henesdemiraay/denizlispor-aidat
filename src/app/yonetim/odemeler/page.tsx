@@ -104,7 +104,7 @@ export default async function OdemelerSayfasi() {
 
   return (
     <>
-      <UstBaslik
+      <UstBaslik genis
         baslik="Ödemeler"
         altBaslik={`${bekleyen.length} bildirim onay bekliyor`}
         geri="/yonetim"

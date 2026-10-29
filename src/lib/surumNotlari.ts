@@ -19,6 +19,16 @@ export type SurumNotu = {
 
 export const SURUM_NOTLARI: SurumNotu[] = [
   {
+    surum: "2026.10.29h",
+    tarih: "29 Ekim 2026",
+    baslik: "Bilgisayarda da rahat",
+    maddeler: [
+      "Geniş ekranda menü artık solda; tüm bölümler tek tıkla açılıyor.",
+      "Yönetim için yeni özet: onay bekleyenler, gecikenler, yoklaması alınmayan antrenmanlar ve devamı düşen sporcular tek listede.",
+      "Kaydetme bildirimleri telefonda alt menünün üstünde görünüyor.",
+    ],
+  },
+  {
     surum: "2026.10.29g",
     tarih: "29 Ekim 2026",
     baslik: "Sezon arşivi: mühür, anılar, yükselenler",

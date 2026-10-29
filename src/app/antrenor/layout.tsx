@@ -1,23 +1,16 @@
-import AltMenu, { type MenuOgesi } from "@/components/AltMenu";
-import SurumNotlari from "@/components/SurumNotlari";
-import { personelGerekli } from "@/lib/yetki";
+import Kabuk from "@/components/Kabuk";
+import { personelGerekli, yoneticiMi } from "@/lib/yetki";
 import { rizaGerekli } from "@/lib/riza";
-
-const MENU: MenuOgesi[] = [
-  { yol: "/antrenor", ad: "Bugün", ikon: "ev" },
-  { yol: "/antrenor/antrenmanlar", ad: "Antrenman", ikon: "takvim" },
-  { yol: "/antrenor/sporcular", ad: "Sporcular", ikon: "kisiler" },
-  { yol: "/panel", ad: "Veli panelim", ikon: "daha" },
-];
+import { ANTRENOR_MENUSU, YONETIM_MENUSU } from "@/lib/menuler";
 
 export default async function AntrenorLayout({ children }: { children: React.ReactNode }) {
-  const { rol } = await personelGerekli();
+  const { rol, profil, user } = await personelGerekli();
   await rizaGerekli();
+  // Yönetim antrenman/gelişim ekranlarını kullanırken kendi menüsünde kalır
+  const menu = yoneticiMi(rol) ? YONETIM_MENUSU : ANTRENOR_MENUSU;
   return (
-    <div className="min-h-dvh bg-zemin">
+    <Kabuk menu={menu} rol={rol} kullanici={profil?.ad_soyad ?? user.email ?? ""}>
       {children}
-      <AltMenu ogeler={MENU} />
-      <SurumNotlari rol={rol} />
-    </div>
+    </Kabuk>
   );
 }

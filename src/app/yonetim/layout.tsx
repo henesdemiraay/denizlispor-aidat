@@ -1,24 +1,14 @@
-import AltMenu, { type MenuOgesi } from "@/components/AltMenu";
-import SurumNotlari from "@/components/SurumNotlari";
+import Kabuk from "@/components/Kabuk";
 import { yoneticiGerekli } from "@/lib/yetki";
 import { rizaGerekli } from "@/lib/riza";
-
-const MENU: MenuOgesi[] = [
-  { yol: "/yonetim", ad: "Özet", ikon: "ev" },
-  { yol: "/yonetim/sporcular", ad: "Sporcular", ikon: "kisiler" },
-  { yol: "/yonetim/aidatlar", ad: "Aidatlar", ikon: "cuzdan" },
-  { yol: "/yonetim/odemeler", ad: "Ödemeler", ikon: "grafik" },
-  { yol: "/yonetim/daha", ad: "Daha", ikon: "daha" },
-];
+import { YONETIM_MENUSU } from "@/lib/menuler";
 
 export default async function YonetimLayout({ children }: { children: React.ReactNode }) {
-  const { rol } = await yoneticiGerekli();
+  const { rol, profil, user } = await yoneticiGerekli();
   await rizaGerekli();
   return (
-    <div className="min-h-dvh bg-zemin">
+    <Kabuk menu={YONETIM_MENUSU} rol={rol} kullanici={profil?.ad_soyad ?? user.email ?? ""}>
       {children}
-      <AltMenu ogeler={MENU} />
-      <SurumNotlari rol={rol} />
-    </div>
+    </Kabuk>
   );
 }

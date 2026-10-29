@@ -41,7 +41,7 @@ export default async function MacDetay({
 
   return (
     <>
-      <UstBaslik
+      <UstBaslik genis
         baslik={macBasligi(mac)}
         altBaslik={`${gunAdi(mac.tarih)}${mac.yas_grubu ? ` · ${mac.yas_grubu}` : ""}`}
         geri="/yonetim/maclar"

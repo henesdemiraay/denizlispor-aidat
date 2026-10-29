@@ -38,7 +38,7 @@ export default function UstBaslik({
             width={40}
             height={40}
             priority
-            className="drop-shadow"
+            className="ust-arma drop-shadow"
           />
         )}
         <div className="min-w-0 flex-1">

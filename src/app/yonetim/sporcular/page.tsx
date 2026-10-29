@@ -33,7 +33,7 @@ export default async function SporcularSayfasi() {
 
   return (
     <>
-      <UstBaslik
+      <UstBaslik genis
         baslik="Sporcular"
         altBaslik={`${sporcular.length} kayıt`}
         geri="/yonetim"

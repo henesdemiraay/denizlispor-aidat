@@ -94,6 +94,13 @@ summary::-webkit-details-marker {
 }
 .yazi-giris { animation: yaziGiris 700ms 420ms cubic-bezier(.2,.8,.2,1) both; }
 
+/* Geniş ekranda kulüp arması kenar menüsünde; başlıkta tekrar edilmez. */
+@media (min-width: 1024px) {
+  .kabuk .ust-arma {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .arma-giris,
   .yazi-giris {
