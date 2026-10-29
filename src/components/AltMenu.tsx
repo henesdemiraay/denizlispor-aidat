@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Ikon, { type IkonAdi } from "@/components/ui/Ikon";
+import { yerDegistirIsaretle } from "@/lib/gezinme";
 
 export type MenuOgesi = { yol: string; ad: string; ikon: IkonAdi; tamEslesme?: boolean };
 
@@ -29,6 +30,13 @@ export default function AltMenu({ ogeler }: { ogeler: MenuOgesi[] }) {
             <Link
               key={o.yol}
               href={o.yol}
+              // Sekmeler arası geçiş geçmişe yazılmaz (telefon uygulamalarındaki gibi):
+              // geri tuşu gezilen sekmeleri tek tek geri sarmaz.
+              replace
+              aria-current={aktif ? "page" : undefined}
+              onClick={() => {
+                if (yol !== o.yol) yerDegistirIsaretle();
+              }}
               className="group relative flex flex-1 flex-col items-center gap-1 px-1 pb-1.5 pt-2.5"
             >
               <span

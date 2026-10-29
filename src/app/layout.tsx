@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import SwKayit from "@/components/SwKayit";
 import KayitBildirimi from "@/components/KayitBildirimi";
+import GezinmeIzi from "@/components/GezinmeIzi";
 import { KULUP, temaDegiskenleri } from "@/kulup";
 
 export const metadata: Metadata = {
@@ -48,6 +49,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-dvh antialiased">
         {children}
+        <GezinmeIzi />
         <Suspense fallback={null}>
           <KayitBildirimi />
         </Suspense>

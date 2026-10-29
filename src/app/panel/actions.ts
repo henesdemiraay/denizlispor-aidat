@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { KVKK_SURUMU } from "@/lib/kvkk";
 
@@ -21,7 +21,7 @@ export async function duyurulariOkundu(idler: string[]) {
 export async function rizaKaydet(formData: FormData) {
   const supabase = await createClient();
   if (formData.get("aydinlatma") !== "on") {
-    redirect("/kvkk/onay?hata=Devam etmek için aydınlatma metnini okuduğunuzu onaylayın");
+    redirect("/kvkk/onay?hata=Devam etmek için aydınlatma metnini okuduğunuzu onaylayın", RedirectType.replace);
   }
   const { error } = await supabase.from("spor_rizalar").insert({
     metin_surumu: KVKK_SURUMU,
@@ -31,5 +31,5 @@ export async function rizaKaydet(formData: FormData) {
   });
   if (error) throw new Error(error.message);
   const devam = String(formData.get("devam") ?? "/git");
-  redirect(devam.startsWith("/") && !devam.startsWith("//") ? devam : "/git");
+  redirect(devam.startsWith("/") && !devam.startsWith("//") ? devam : "/git", RedirectType.replace);
 }

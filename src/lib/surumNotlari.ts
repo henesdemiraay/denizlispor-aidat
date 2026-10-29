@@ -19,6 +19,16 @@ export type SurumNotu = {
 
 export const SURUM_NOTLARI: SurumNotu[] = [
   {
+    surum: "2026.10.29f",
+    tarih: "29 Ekim 2026",
+    baslik: "Geri tuşu artık uygulama gibi",
+    maddeler: [
+      "Alt menüde sekmeler arasında gezinmek geri geçmişini doldurmuyor.",
+      "Üstteki ‹ düğmesi her zaman bir üst ekrana götürüyor; gezdiğiniz ekranları tek tek geri sarmıyor.",
+      "Kaydettikten sonra geri tuşu aynı ekranı ikinci kez göstermiyor.",
+    ],
+  },
+  {
     surum: "2026.10.29e",
     tarih: "29 Ekim 2026",
     baslik: "Kulüp ekibine yeni araçlar",

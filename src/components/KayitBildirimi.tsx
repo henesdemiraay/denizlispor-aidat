@@ -2,28 +2,35 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { oncekiYol } from "@/lib/gezinme";
 
 export default function KayitBildirimi() {
   const params = useSearchParams();
   const router = useRouter();
   const yol = usePathname();
-  const mesaj = params.get("kaydedildi");
-  const [gorunur, setGorunur] = useState(false);
+  const gelen = params.get("kaydedildi");
+  const [mesaj, setMesaj] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!mesaj) {
-      setGorunur(false);
-      return;
+    if (!gelen) return;
+    setMesaj(gelen);
+    if (oncekiYol() === yol) {
+      // Liste → form → kaydet → aynı liste: geçmişte aynı ekran iki kez kalmasın,
+      // bir önceki (güncellenmiş) kayda dönülür. Bildirim ekranda kalır.
+      router.back();
+      setTimeout(() => router.refresh(), 150);
+    } else {
+      router.replace(yol, { scroll: false });
     }
-    setGorunur(true);
-    const t = setTimeout(() => {
-      setGorunur(false);
-      router.replace(yol);
-    }, 3200);
-    return () => clearTimeout(t);
-  }, [mesaj, router, yol]);
+  }, [gelen, router, yol]);
 
-  if (!mesaj || !gorunur) return null;
+  useEffect(() => {
+    if (!mesaj) return;
+    const t = setTimeout(() => setMesaj(null), 3200);
+    return () => clearTimeout(t);
+  }, [mesaj]);
+
+  if (!mesaj) return null;
 
   return (
     <div

@@ -59,7 +59,7 @@ export default function SporcuVeliForm({ sporcu }: { sporcu?: Sporcu }) {
     const mesaj = duzenleme
       ? "Bilgiler kaydedildi"
       : "Kayıt kulüp onayına gönderildi";
-    router.push(
+    router.replace(
       duzenleme
         ? `/panel/sporcu/${sporcu!.id}?kaydedildi=${encodeURIComponent(mesaj)}`
         : `/panel?kaydedildi=${encodeURIComponent(mesaj)}`,

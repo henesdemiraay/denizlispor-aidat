@@ -6,6 +6,7 @@ import Uyari from "@/components/Uyari";
 import { createClient } from "@/lib/supabase/client";
 import { donemAdi, tl } from "@/lib/format";
 import type { Aidat, Sporcu } from "@/lib/types";
+import { ustEkranaDon } from "@/lib/gezinme";
 
 export default function OdemeBildirForm({
   sporcular,
@@ -105,7 +106,7 @@ export default function OdemeBildirForm({
           Ödeme bildiriminiz alındı. Kulüp yönetimi dekontu inceledikten sonra
           onaylayacak ve aidat durumunuz güncellenecektir.
         </Uyari>
-        <button className="btn-birincil w-full" onClick={() => router.push("/panel")}>
+        <button className="btn-birincil w-full" onClick={() => ustEkranaDon(router, "/panel")}>
           Panele dön
         </button>
       </div>

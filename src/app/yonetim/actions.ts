@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ROL_ADI } from "@/lib/roller";
 
@@ -19,7 +19,8 @@ function metin(v: FormDataEntryValue | null) {
 /** Kaydetme sonrası ekranda "kaydedildi" bildirimi göstermek için. */
 function bildir(yol: string, mesaj: string): never {
   const ayrac = yol.includes("?") ? "&" : "?";
-  redirect(`${yol}${ayrac}kaydedildi=${encodeURIComponent(mesaj)}`);
+  // replace: kaydetme dönüşü geri geçmişine yeni ekran olarak yazılmaz
+  redirect(`${yol}${ayrac}kaydedildi=${encodeURIComponent(mesaj)}`, RedirectType.replace);
 }
 
 export async function sporcuKaydet(formData: FormData) {
