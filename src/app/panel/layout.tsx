@@ -3,9 +3,10 @@ import SurumNotlari from "@/components/SurumNotlari";
 import { oturum } from "@/lib/yetki";
 
 const MENU: MenuOgesi[] = [
-  { yol: "/panel", ad: "Ana sayfa", ikon: "ev" },
+  { yol: "/panel", ad: "Bugün", ikon: "ev" },
   { yol: "/panel/antrenman", ad: "Antrenman", ikon: "takvim" },
   { yol: "/panel/maclar", ad: "Maçlar", ikon: "futbol" },
+  { yol: "/panel/arsiv", ad: "Arşiv", ikon: "arsiv" },
   { yol: "/panel/hesap", ad: "Hesabım", ikon: "kisiler" },
 ];
 

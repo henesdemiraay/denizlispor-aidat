@@ -95,9 +95,9 @@ export default async function VeliKasa() {
         altBaslik="Toplanan aidat, kulübe aktarılan tutar ve havuz"
         geri="/panel"
       >
-        <div className="rounded-2xl bg-white/[0.14] px-4 py-4 ring-1 ring-white/10">
-          <p className="text-[11px] text-white/60">Havuzda kalan tutar</p>
-          <p className="mt-1 text-3xl font-extrabold leading-none">{tl(havuz)}</p>
+        <div className="rounded-2xl bg-white/[0.07] px-4 py-4 ring-1 ring-white/10">
+          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-yesil-500">Havuzda kalan</p>
+          <p className="mt-2 font-manset text-[44px] font-extrabold leading-none">{tl(havuz)}</p>
           <p className="mt-2 text-[11px] leading-relaxed text-white/60">
             Onaylanmış tahsilat ve ek gelirlerden, kulübe aktarılan tutarlar ile giderler
             düşülerek hesaplanır.

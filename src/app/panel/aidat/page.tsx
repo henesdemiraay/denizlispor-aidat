@@ -44,11 +44,11 @@ export default async function VeliAidat() {
   return (
     <>
       <UstBaslik baslik="Aidat" altBaslik="Kendi sporcularınızın durumu" geri="/panel">
-        <div className="rounded-2xl bg-white/[0.14] px-4 py-4 ring-1 ring-white/10">
+        <div className="rounded-2xl bg-white/[0.07] px-4 py-4 ring-1 ring-white/10">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">
             Toplam bekleyen
           </p>
-          <p className="mt-1 text-3xl font-extrabold tracking-tight">{tl(borc)}</p>
+          <p className="mt-2 font-manset text-[44px] font-extrabold leading-none">{tl(borc)}</p>
           <p className="mt-0.5 text-xs text-white/65">
             Bugüne kadar ödenen {tl(odenen)}
             {bekleyenBildirim > 0 ? ` · ${bekleyenBildirim} bildirim onayda` : ""}

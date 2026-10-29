@@ -56,8 +56,8 @@ export default async function AntrenorAnaSayfa() {
             { ad: "Bu hafta", deger: String(haftalik.length) },
             { ad: "Yaş grubu", deger: String(gruplar.length) },
           ].map((k) => (
-            <div key={k.ad} className="rounded-2xl bg-white/[0.14] px-3 py-3 ring-1 ring-white/10">
-              <p className="text-xl font-extrabold leading-none">{k.deger}</p>
+            <div key={k.ad} className="rounded-2xl bg-white/[0.07] px-3 py-3 ring-1 ring-white/10">
+              <p className="font-manset text-[30px] font-extrabold leading-none">{k.deger}</p>
               <p className="mt-1 text-[11px] text-white/60">{k.ad}</p>
             </div>
           ))}
