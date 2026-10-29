@@ -6,6 +6,7 @@ import { gunAdi, tl } from "@/lib/format";
 import { ANTRENMAN_TURU, haftaBasi } from "@/lib/antrenman";
 import { anaEkranYolu, paraGorebilirMi, personelMi, rolAdi, yoneticiMi } from "@/lib/roller";
 import type { Aidat, Antrenman, Sporcu, Yoklama } from "@/lib/types";
+import { KULUP } from "@/kulup";
 
 export const dynamic = "force-dynamic";
 
@@ -136,11 +137,11 @@ export default async function VeliPaneli() {
         ) : null}
 
         {siradaki ? (
-          <Link href="/panel/antrenman" className="relative mt-4 block overflow-hidden rounded-[22px] bg-yesil-500 px-5 py-5 text-siyah active:scale-[.99]">
+          <Link href="/panel/antrenman" className="relative mt-4 block overflow-hidden rounded-[22px] bg-yesil-500 px-5 py-5 text-anametin active:scale-[.99]">
             <svg aria-hidden viewBox="0 0 220 220" className="pointer-events-none absolute -right-14 -top-12 h-56 w-56 opacity-[0.18]">
-              <circle cx="110" cy="110" r="100" fill="none" stroke="#231F20" strokeWidth="1.5" />
-              <circle cx="110" cy="110" r="34" fill="none" stroke="#231F20" strokeWidth="1.5" />
-              <line x1="10" y1="110" x2="210" y2="110" stroke="#231F20" strokeWidth="1.5" />
+              <circle cx="110" cy="110" r="100" fill="none" stroke="currentColor" strokeWidth="1.5" />
+              <circle cx="110" cy="110" r="34" fill="none" stroke="currentColor" strokeWidth="1.5" />
+              <line x1="10" y1="110" x2="210" y2="110" stroke="currentColor" strokeWidth="1.5" />
             </svg>
             <p className="relative font-mono text-[11px] font-medium tracking-[0.08em]">SIRADAKİ ANTRENMAN</p>
             <p className="manset relative mt-3 text-[50px] leading-[0.88]">
@@ -238,7 +239,7 @@ export default async function VeliPaneli() {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={foto} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
                     ) : (
-                      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-yesil-500 font-manset text-2xl font-extrabold text-siyah">
+                      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-yesil-500 font-manset text-2xl font-extrabold text-anametin">
                         {s.ad[0]}
                         {s.soyad[0]}
                       </span>
@@ -250,7 +251,7 @@ export default async function VeliPaneli() {
                       <p className="truncate text-xs text-neutral-500">
                         {[s.yas_grubu, s.mevki, s.forma_no ? `#${s.forma_no}` : null]
                           .filter(Boolean)
-                          .join(" · ") || "Denizlispor Altyapı"}
+                          .join(" · ") || KULUP.ad}
                       </p>
                       {s.durum === "onay_bekliyor" ? (
                         <span className="rozet mt-2 bg-amber-100 text-amber-900">

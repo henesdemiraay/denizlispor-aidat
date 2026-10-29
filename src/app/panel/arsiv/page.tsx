@@ -68,7 +68,7 @@ export default async function Arsiv({ searchParams }: { searchParams: Promise<{ 
                 aria-current={aktif ? "page" : undefined}
                 className={`flex h-10 shrink-0 items-center rounded-full px-4 text-[13px] ${
                   aktif
-                    ? "bg-yesil-500 font-extrabold text-siyah"
+                    ? "bg-yesil-500 font-extrabold text-anametin"
                     : "bg-yuzey font-semibold text-white ring-1 ring-white/10"
                 }`}
               >

@@ -1,0 +1,47 @@
+{
+  "kod": "denizlispor",
+  "ad": "Denizlispor Altyapı",
+  "kisaAd": "Denizlispor",
+  "resmiAd": "Denizlispor Kulübü Derneği",
+  "sehir": "Denizli",
+  "kurulus": 1966,
+  "etiket": "Altyapı · Sporcu Takip",
+  "arma": "/icons/icon-512.png",
+  "renkler": {
+    "ana": "#00A650",
+    "koyu": "#231F20",
+    "acik": "#FFFFFF",
+    "anaUzerindeMetin": "#231F20"
+  },
+  "palet": {
+    "50": "#16271E",
+    "100": "#1D3426",
+    "200": "#245035",
+    "300": "#66CC94",
+    "400": "#2BB86B",
+    "500": "#00A650",
+    "600": "#2BB86B",
+    "700": "#33C06F",
+    "800": "#66CC94",
+    "900": "#A3E0BE"
+  },
+  "yayin": {
+    "adres": "https://denizlisporaltyapi.vercel.app"
+  },
+  "supabase": {
+    "proje": "ikglmbnoknxmhxexzboi",
+    "yayinAnahtari": "sb_publishable_EAx5TuiZZPcplpBf7AnqTA_Kfb1E_PG"
+  },
+  "notr": {
+    "50": "#2D292A",
+    "100": "#353031",
+    "200": "#3E393A",
+    "300": "#4D4748",
+    "400": "#857E7F",
+    "500": "#ABA5A6",
+    "600": "#C9C4C5",
+    "700": "#DAD6D6",
+    "800": "#EEECEC",
+    "900": "#FFFFFF"
+  }
+}

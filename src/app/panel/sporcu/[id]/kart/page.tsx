@@ -5,6 +5,7 @@ import { oturum } from "@/lib/yetki";
 import { DEGERLENDIRME_ALANLARI } from "@/lib/antrenman";
 import { donemAdi } from "@/lib/format";
 import type { Degerlendirme, Sporcu } from "@/lib/types";
+import { KULUP } from "@/kulup";
 
 export const dynamic = "force-dynamic";
 
@@ -78,7 +79,7 @@ export default async function SezonKarti({ params }: { params: Promise<{ id: str
                 </p>
               </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icons/icon-512.png" alt="Denizlispor arması" className="h-14 w-14" />
+              <img src={KULUP.arma} alt={`${KULUP.kisaAd} arması`} className="h-14 w-14" />
             </div>
 
             <div className="relative mt-5 flex items-end gap-4">
@@ -128,7 +129,7 @@ export default async function SezonKarti({ params }: { params: Promise<{ id: str
                   NO {no} · {deg ? donemAdi(deg.donem).toLocaleUpperCase("tr-TR") : "DEĞERLENDİRME BEKLENİYOR"}
                 </span>
               </div>
-              <span className="font-mono text-[10px] tracking-[0.08em] text-neutral-500">DENİZLİSPOR ALTYAPI</span>
+              <span className="font-mono text-[10px] tracking-[0.08em] text-neutral-500">{KULUP.ad.toLocaleUpperCase("tr-TR")}</span>
             </div>
           </div>
         </article>

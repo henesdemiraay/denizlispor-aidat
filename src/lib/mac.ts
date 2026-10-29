@@ -1,9 +1,10 @@
 import type { Mac } from "@/lib/types";
+import { KULUP } from "@/kulup";
 
 export function macBasligi(m: Pick<Mac, "rakip" | "yer">) {
-  if (m.yer === "ic") return `Denizlispor — ${m.rakip}`;
-  if (m.yer === "dis") return `${m.rakip} — Denizlispor`;
-  return `Denizlispor / ${m.rakip}`;
+  if (m.yer === "ic") return `${KULUP.kisaAd} — ${m.rakip}`;
+  if (m.yer === "dis") return `${m.rakip} — ${KULUP.kisaAd}`;
+  return `${KULUP.kisaAd} / ${m.rakip}`;
 }
 
 export function skorMetni(m: Pick<Mac, "skor_biz" | "skor_rakip" | "yer">) {

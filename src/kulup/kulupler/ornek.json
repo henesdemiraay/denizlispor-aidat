@@ -1,0 +1,23 @@
+{
+  "kod": "ornek",
+  "ad": "Örnek FK Altyapı",
+  "kisaAd": "Örnek FK",
+  "resmiAd": "Örnek Futbol Kulübü Derneği",
+  "sehir": "İzmir",
+  "kurulus": 1923,
+  "etiket": "Altyapı · Sporcu Takip",
+  "arma": "/kulupler/ornek/arma.svg",
+  "renkler": {
+    "ana": "#1E6FD9",
+    "koyu": "#141821",
+    "acik": "#FFFFFF",
+    "anaUzerindeMetin": "#FFFFFF"
+  },
+  "yayin": {
+    "adres": "https://ornekfk-altyapi.vercel.app"
+  },
+  "supabase": {
+    "proje": "ornekprojekodu00000",
+    "yayinAnahtari": ""
+  }
+}

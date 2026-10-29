@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { KULUP, KULUP_MANSET } from "@/kulup";
 
 export default function AcilisEkrani() {
   const router = useRouter();
@@ -53,8 +54,8 @@ export default function AcilisEkrani() {
       />
       <div className="arma-giris relative">
         <Image
-          src="/icons/icon-512.png"
-          alt="Denizlispor arması"
+          src={KULUP.arma} unoptimized={KULUP.arma.endsWith(".svg")}
+          alt={`${KULUP.kisaAd} arması`}
           width={180}
           height={180}
           priority
@@ -63,15 +64,15 @@ export default function AcilisEkrani() {
       </div>
 
       <div className="yazi-giris mt-8">
-        <h1 className="manset text-5xl text-white">DENİZLİSPOR</h1>
-        <p className="mt-2 font-mono text-xs font-medium tracking-[0.2em] text-yesil-500">ALTYAPI · SPORCU TAKİP</p>
+        <h1 className="manset text-5xl text-white">{KULUP_MANSET}</h1>
+        <p className="mt-2 font-mono text-xs font-medium tracking-[0.2em] text-yesil-500">{KULUP.etiket.toLocaleUpperCase("tr-TR")}</p>
       </div>
 
       <div className="yazi-giris absolute bottom-10 flex flex-col items-center gap-3">
         <div className="h-1 w-24 overflow-hidden rounded-full bg-white/20">
           <div className="h-full w-1/3 animate-[yaziGiris_1.4s_ease-in-out_infinite_alternate] rounded-full bg-yesil-500" />
         </div>
-        <p className="font-mono text-[11px] tracking-[0.2em] text-white/50">1966</p>
+        <p className="font-mono text-[11px] tracking-[0.2em] text-white/50">{KULUP.kurulus}</p>
       </div>
     </main>
   );

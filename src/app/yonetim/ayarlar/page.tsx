@@ -4,6 +4,7 @@ import { ayarKaydet, rolAta, rolTalebiKarar } from "@/app/yonetim/actions";
 import { ROL_ADI } from "@/lib/roller";
 import { gunAdi } from "@/lib/format";
 import KaydetDugmesi from "@/components/KaydetDugmesi";
+import { KULUP } from "@/kulup";
 
 export const dynamic = "force-dynamic";
 
@@ -56,7 +57,7 @@ export default async function AyarlarSayfasi() {
           <div>
             <label className="etiket" htmlFor="hesap_sahibi">Hesap sahibi</label>
             <input id="hesap_sahibi" name="hesap_sahibi" className="alan"
-              defaultValue={a.hesap_sahibi} placeholder="Denizlispor Kulübü Derneği" />
+              defaultValue={a.hesap_sahibi} placeholder={KULUP.resmiAd} />
           </div>
           <div>
             <label className="etiket" htmlFor="banka_adi">Banka</label>
@@ -121,7 +122,7 @@ export default async function AyarlarSayfasi() {
                     <input type="hidden" name="kullanici_id" value={t.kullanici_id} />
                     <input type="hidden" name="talep_rol" value={t.talep_rol} />
                     <input type="hidden" name="karar" value="onayla" />
-                    <button className="rounded-lg bg-yesil-500 px-3 py-1.5 text-xs font-bold text-siyah">
+                    <button className="rounded-lg bg-yesil-500 px-3 py-1.5 text-xs font-bold text-anametin">
                       Onayla
                     </button>
                   </form>

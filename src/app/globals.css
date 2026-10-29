@@ -7,11 +7,8 @@
   --font-sans: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-manset: "Big Shoulders Display", "Barlow", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  /* Marka renkleri (kulübe göre değişir) */
-  --yesil: #00a650;
-  --yesil-koyu: #00632f;
-  --siyah: #231f20;
-  --zemin: #231f20;
+  /* Marka renkleri burada yazılmaz: kök stil src/kulup yapılandırmasından gelir
+     (--marka-50…900, --notr-50…900, --koyu, --yuzey, --ana-metin). */
   --metin: #ffffff;
   color-scheme: dark;
 }
@@ -24,7 +21,7 @@ html,
 body {
   font-family: var(--font-sans);
   letter-spacing: 0;
-  background: var(--zemin);
+  background: rgb(var(--koyu));
   color: var(--metin);
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
@@ -57,7 +54,7 @@ summary::-webkit-details-marker {
     @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition active:scale-[.98] disabled:opacity-50 disabled:active:scale-100;
   }
   .btn-birincil {
-    @apply btn bg-yesil-500 font-bold text-siyah shadow-sm shadow-yesil-900/20 hover:bg-yesil-400;
+    @apply btn bg-yesil-500 font-bold text-anametin shadow-sm shadow-yesil-900/20 hover:bg-yesil-400;
   }
   .btn-ikincil {
     @apply btn bg-neutral-100 text-white ring-1 ring-white/10 hover:bg-neutral-200;

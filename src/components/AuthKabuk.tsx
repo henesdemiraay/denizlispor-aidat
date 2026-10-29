@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { KULUP, KULUP_MANSET } from "@/kulup";
 
 export default function AuthKabuk({
   baslik,
@@ -12,10 +13,10 @@ export default function AuthKabuk({
   return (
     <main className="flex min-h-dvh flex-col bg-siyah">
       <div className="flex flex-col items-center px-6 pb-8 pt-12">
-        <Image src="/icons/icon-512.png" alt="Denizlispor" width={78} height={78} priority />
-        <h1 className="manset mt-4 text-4xl text-white">DENİZLİSPOR</h1>
+        <Image src={KULUP.arma} unoptimized={KULUP.arma.endsWith(".svg")} alt={`${KULUP.kisaAd} arması`} width={78} height={78} priority />
+        <h1 className="manset mt-4 text-4xl text-white">{KULUP_MANSET}</h1>
         <p className="mt-1.5 font-mono text-[11px] font-medium tracking-[0.18em] text-yesil-500">
-          ALTYAPI · SPORCU TAKİP
+          {KULUP.etiket.toLocaleUpperCase("tr-TR")}
         </p>
       </div>
 

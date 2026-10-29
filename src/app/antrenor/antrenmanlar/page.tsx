@@ -49,7 +49,7 @@ export default async function Antrenmanlar({
       <div className="mx-auto w-full max-w-3xl px-4 pb-28">
         <details open={sp.yeni === "1"} className="kart mt-4 overflow-hidden">
           <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-4">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-yesil-500 text-siyah">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-yesil-500 text-anametin">
               <Ikon ad="artı" className="h-5 w-5" />
             </span>
             <span className="flex-1 text-sm font-bold text-neutral-900">Yeni antrenman ekle</span>
